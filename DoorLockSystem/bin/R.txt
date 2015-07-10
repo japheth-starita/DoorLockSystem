@@ -441,7 +441,7 @@ int id custom 0x7f090035
 int id customPanel 0x7f090034
 int id decor_content_parent 0x7f09003e
 int id default_activity_button 0x7f090029
-int id deviceManager 0x7f090050
+int id deviceManager 0x7f09004f
 int id dialog 0x7f09001e
 int id disableHome 0x7f09000d
 int id dropdown 0x7f09001f
@@ -460,8 +460,8 @@ int id line1 0x7f090058
 int id line3 0x7f09005c
 int id listMode 0x7f09000a
 int id list_item 0x7f09002a
-int id lockUnlock 0x7f090052
-int id logo 0x7f09004f
+int id lockUnlock 0x7f090051
+int id logo 0x7f090052
 int id media_actions 0x7f090056
 int id middle 0x7f090022
 int id multiply 0x7f090014
@@ -472,7 +472,7 @@ int id parentPanel 0x7f09002d
 int id progress_circular 0x7f090007
 int id progress_horizontal 0x7f090008
 int id radio 0x7f09003a
-int id requestCode 0x7f090051
+int id requestCode 0x7f090050
 int id screen 0x7f090015
 int id scrollView 0x7f090032
 int id search_badge 0x7f090044
