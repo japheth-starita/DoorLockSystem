@@ -4,14 +4,31 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
+import android.view.View;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.widget.Button;
 public class MainActivity extends ActionBarActivity {
+	
+	private Button onBT;
+	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        onBT = (Button)findViewById(R.id.deviceManager);
+        onBT = (Button)findViewById(R.id.requestCode);
+        onBT = (Button)findViewById(R.id.lockUnlock);
+        onBT.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (!adapt.isEnabled()){
+					startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
+				}
+				
+			}
+		});
     }
 
     @Override
