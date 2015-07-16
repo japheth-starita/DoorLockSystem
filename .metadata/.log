@@ -1330,3 +1330,629 @@ Chain 2:
 	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
 	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
 	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+!SESSION 2015-07-10 15:30:24.593 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_PH
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.mylyn.ui 4 0 2015-07-10 15:30:27.282
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.mylyn.ui [578]
+  Unresolved requirement: Import-Package: org.eclipse.egit.ui.internal.synchronize.model; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui.internal.synchronize.model; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+       org.eclipse.egit.ui [579]
+         No resolution report for the bundle.  Unresolved requirement: Import-Package: org.eclipse.egit.ui.internal.commit; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui.internal.commit; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+  Unresolved requirement: Import-Package: org.eclipse.egit.ui; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.egit.ui 4 0 2015-07-10 15:30:27.394
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.ui [579]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.mylyn.git.ui 4 0 2015-07-10 15:30:27.530
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.mylyn.git.ui [636]
+  Unresolved requirement: Require-Bundle: org.eclipse.egit.ui
+    -> Bundle-SymbolicName: org.eclipse.egit.ui; bundle-version="3.4.2.201412180340-r"; singleton:="true"
+       org.eclipse.egit.ui [579]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+!SESSION 2015-07-10 19:22:38.134 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_PH
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.mylyn.ui 4 0 2015-07-10 19:22:40.400
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.mylyn.ui [578]
+  Unresolved requirement: Import-Package: org.eclipse.egit.ui.internal.commit; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui.internal.commit; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+       org.eclipse.egit.ui [579]
+         No resolution report for the bundle.  Unresolved requirement: Import-Package: org.eclipse.egit.ui.internal.synchronize.model; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui.internal.synchronize.model; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+  Unresolved requirement: Import-Package: org.eclipse.egit.ui; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.egit.ui 4 0 2015-07-10 19:22:40.477
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.ui [579]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.mylyn.git.ui 4 0 2015-07-10 19:22:40.589
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.mylyn.git.ui [636]
+  Unresolved requirement: Require-Bundle: org.eclipse.egit.ui
+    -> Bundle-SymbolicName: org.eclipse.egit.ui; bundle-version="3.4.2.201412180340-r"; singleton:="true"
+       org.eclipse.egit.ui [579]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+!SESSION 2015-07-12 11:17:46.684 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_PH
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.mylyn.ui 4 0 2015-07-12 11:17:48.784
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.mylyn.ui [578]
+  Unresolved requirement: Import-Package: org.eclipse.egit.ui.internal.commit; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui.internal.commit; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+       org.eclipse.egit.ui [579]
+         No resolution report for the bundle.  Unresolved requirement: Import-Package: org.eclipse.egit.ui.internal.synchronize.model; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui.internal.synchronize.model; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+  Unresolved requirement: Import-Package: org.eclipse.egit.ui; version="[3.4.2,3.5.0)"
+    -> Export-Package: org.eclipse.egit.ui; bundle-symbolic-name="org.eclipse.egit.ui"; bundle-version="3.4.2.201412180340-r"; version="3.4.2"; x-friends:="org.eclipse.egit.mylyn.ui"
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.egit.ui 4 0 2015-07-12 11:17:48.864
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.egit.ui [579]
+  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+
+!ENTRY org.eclipse.mylyn.git.ui 4 0 2015-07-12 11:17:48.978
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.mylyn.git.ui [636]
+  Unresolved requirement: Require-Bundle: org.eclipse.egit.ui
+    -> Bundle-SymbolicName: org.eclipse.egit.ui; bundle-version="3.4.2.201412180340-r"; singleton:="true"
+       org.eclipse.egit.ui [579]
+         No resolution report for the bundle.  Bundle was not resolved because of a uses contraint violation.
+  org.osgi.service.resolver.ResolutionException: Uses constraint violation. Unable to resolve resource org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"] because it is exposed to package 'com.jcraft.jsch' from resources com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"] and com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"] via two dependency chains.
+
+Chain 1:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.37)(!(bundle-version>=0.2.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.51.v201410302000"]
+
+Chain 2:
+  org.eclipse.egit.ui [osgi.identity; osgi.identity="org.eclipse.egit.ui"; type="osgi.bundle"; version:Version="3.4.2.201412180340-r"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=org.eclipse.jsch.core)(&(bundle-version>=1.1.100)(!(bundle-version>=2.0.0))))
+     |
+    provide: osgi.wiring.bundle; bundle-version:Version="1.1.500.v20131112-1442"; osgi.wiring.bundle="org.eclipse.jsch.core"; singleton:="true"
+  org.eclipse.jsch.core [osgi.identity; osgi.identity="org.eclipse.jsch.core"; type="osgi.bundle"; version:Version="1.1.500.v20131112-1442"; singleton:="true"]
+    require: (&(osgi.wiring.bundle=com.jcraft.jsch)(&(bundle-version>=0.1.50)(!(bundle-version>=1.0.0))))
+     |
+    provide: osgi.wiring.bundle: com.jcraft.jsch
+  com.jcraft.jsch [osgi.identity; osgi.identity="com.jcraft.jsch"; type="osgi.bundle"; version:Version="0.1.50.v201403120620"]
+	at org.eclipse.osgi.container.Module.start(Module.java:434)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1582)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:1561)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:1533)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1476)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:340)
+!SESSION 2015-07-15 11:46:13.149 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.core.resources 4 567 2015-07-15 11:46:41.560
+!MESSAGE Workspace restored, but some problems occurred.
+!SUBENTRY 1 org.eclipse.core.resources 4 567 2015-07-15 11:46:41.560
+!MESSAGE Could not read metadata for '.org.eclipse.jdt.core.external.folders'.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: The project description file (.project) for '.org.eclipse.jdt.core.external.folders' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:851)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:884)
+	at org.eclipse.core.internal.resources.SaveManager.restoreMetaInfo(SaveManager.java:864)
+	at org.eclipse.core.internal.resources.SaveManager.restore(SaveManager.java:715)
+	at org.eclipse.core.internal.resources.SaveManager.startup(SaveManager.java:1565)
+	at org.eclipse.core.internal.resources.Workspace.startup(Workspace.java:2464)
+	at org.eclipse.core.internal.resources.Workspace.open(Workspace.java:2219)
+	at org.eclipse.core.resources.ResourcesPlugin.start(ResourcesPlugin.java:447)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:771)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl$3.run(BundleContextImpl.java:1)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.startActivator(BundleContextImpl.java:764)
+	at org.eclipse.osgi.internal.framework.BundleContextImpl.start(BundleContextImpl.java:721)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle.startWorker0(EquinoxBundle.java:936)
+	at org.eclipse.osgi.internal.framework.EquinoxBundle$EquinoxModule.startWorker(EquinoxBundle.java:319)
+	at org.eclipse.osgi.container.Module.doStart(Module.java:571)
+	at org.eclipse.osgi.container.Module.start(Module.java:439)
+	at org.eclipse.osgi.framework.util.SecureAction.start(SecureAction.java:454)
+	at org.eclipse.osgi.internal.hooks.EclipseLazyStarter.postFindLocalClass(EclipseLazyStarter.java:107)
+	at org.eclipse.osgi.internal.loader.classpath.ClasspathManager.findLocalClass(ClasspathManager.java:531)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.findLocalClass(ModuleClassLoader.java:324)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findLocalClass(BundleLoader.java:320)
+	at org.eclipse.osgi.internal.loader.sources.SingleSourcePackage.loadClass(SingleSourcePackage.java:36)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClassInternal(BundleLoader.java:391)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:345)
+	at org.eclipse.osgi.internal.loader.BundleLoader.findClass(BundleLoader.java:337)
+	at org.eclipse.osgi.internal.loader.ModuleClassLoader.loadClass(ModuleClassLoader.java:160)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:136)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+!SUBENTRY 2 org.eclipse.core.resources 4 567 2015-07-15 11:46:41.591
+!MESSAGE The project description file (.project) for '.org.eclipse.jdt.core.external.folders' is missing.  This file contains important information about the project.  The project will not function properly until this file is restored.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-15 11:47:03.632
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-15 11:47:03.632
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\renzdelbarrio'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2015-07-15 19:13:35.137 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-15 19:14:55.736
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-15 19:14:55.752
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\renzdelbarrio'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.core.resources 4 4 2015-07-15 19:17:59.794
+!MESSAGE Exception occurred while saving project preferences: /BlueShit/.settings/org.eclipse.jdt.core.prefs.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: A resource already exists on disk 'D:\Undergrad\New folder\BlueShit\.settings'.
+	at org.eclipse.core.internal.resources.Folder.assertCreateRequirements(Folder.java:47)
+	at org.eclipse.core.internal.resources.Folder.create(Folder.java:95)
+	at org.eclipse.core.internal.resources.ProjectPreferences$1.run(ProjectPreferences.java:622)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.ProjectPreferences.save(ProjectPreferences.java:648)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalFlush(EclipsePreferences.java:471)
+	at org.eclipse.core.internal.resources.ProjectPreferences.flush(ProjectPreferences.java:363)
+	at org.eclipse.jdt.internal.core.JavaProject.setOption(JavaProject.java:2955)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.checkAndFixCompilerCompliance(ProjectHelper.java:513)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.fixProjectClasspathEntries(ProjectHelper.java:422)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.fixProject(ProjectHelper.java:296)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.createEclipseProject(NewProjectCreator.java:837)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.createProjectAsync(NewProjectCreator.java:660)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.access$0(NewProjectCreator.java:590)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator$3.execute(NewProjectCreator.java:400)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation$1.run(WorkspaceModifyOperation.java:106)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.run(WorkspaceModifyOperation.java:118)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+!SUBENTRY 1 org.eclipse.core.resources 4 272 2015-07-15 19:17:59.802
+!MESSAGE A resource already exists on disk 'D:\Undergrad\New folder\BlueShit\.settings'.
+
+!ENTRY org.eclipse.core.resources 4 4 2015-07-15 19:17:59.806
+!MESSAGE Exception occurred while saving project preferences: /BlueShit/.settings/org.eclipse.jdt.core.prefs.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: A resource already exists on disk 'D:\Undergrad\New folder\BlueShit\.settings'.
+	at org.eclipse.core.internal.resources.Folder.assertCreateRequirements(Folder.java:47)
+	at org.eclipse.core.internal.resources.Folder.create(Folder.java:95)
+	at org.eclipse.core.internal.resources.ProjectPreferences$1.run(ProjectPreferences.java:622)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.ProjectPreferences.save(ProjectPreferences.java:648)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalFlush(EclipsePreferences.java:471)
+	at org.eclipse.core.internal.resources.ProjectPreferences.flush(ProjectPreferences.java:363)
+	at org.eclipse.jdt.internal.core.JavaProject.setOption(JavaProject.java:2955)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.checkAndFixCompilerCompliance(ProjectHelper.java:515)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.fixProjectClasspathEntries(ProjectHelper.java:422)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.fixProject(ProjectHelper.java:296)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.createEclipseProject(NewProjectCreator.java:837)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.createProjectAsync(NewProjectCreator.java:660)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.access$0(NewProjectCreator.java:590)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator$3.execute(NewProjectCreator.java:400)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation$1.run(WorkspaceModifyOperation.java:106)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.run(WorkspaceModifyOperation.java:118)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+!SUBENTRY 1 org.eclipse.core.resources 4 272 2015-07-15 19:17:59.806
+!MESSAGE A resource already exists on disk 'D:\Undergrad\New folder\BlueShit\.settings'.
+
+!ENTRY org.eclipse.core.resources 4 4 2015-07-15 19:17:59.810
+!MESSAGE Exception occurred while saving project preferences: /BlueShit/.settings/org.eclipse.jdt.core.prefs.
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: A resource already exists on disk 'D:\Undergrad\New folder\BlueShit\.settings'.
+	at org.eclipse.core.internal.resources.Folder.assertCreateRequirements(Folder.java:47)
+	at org.eclipse.core.internal.resources.Folder.create(Folder.java:95)
+	at org.eclipse.core.internal.resources.ProjectPreferences$1.run(ProjectPreferences.java:622)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.core.internal.resources.ProjectPreferences.save(ProjectPreferences.java:648)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.internalFlush(EclipsePreferences.java:471)
+	at org.eclipse.core.internal.resources.ProjectPreferences.flush(ProjectPreferences.java:363)
+	at org.eclipse.jdt.internal.core.JavaProject.setOption(JavaProject.java:2955)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.checkAndFixCompilerCompliance(ProjectHelper.java:517)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.fixProjectClasspathEntries(ProjectHelper.java:422)
+	at com.android.ide.eclipse.adt.internal.project.ProjectHelper.fixProject(ProjectHelper.java:296)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.createEclipseProject(NewProjectCreator.java:837)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.createProjectAsync(NewProjectCreator.java:660)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator.access$0(NewProjectCreator.java:590)
+	at com.android.ide.eclipse.adt.internal.wizards.newproject.NewProjectCreator$3.execute(NewProjectCreator.java:400)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation$1.run(WorkspaceModifyOperation.java:106)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2313)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.run(WorkspaceModifyOperation.java:118)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+!SUBENTRY 1 org.eclipse.core.resources 4 272 2015-07-15 19:17:59.810
+!MESSAGE A resource already exists on disk 'D:\Undergrad\New folder\BlueShit\.settings'.
+
+!ENTRY org.eclipse.equinox.preferences 4 2 2015-07-15 19:18:02.455
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.equinox.preferences".
+!STACK 0
+java.lang.IllegalArgumentException: Attempted to beginRule: P/DoorLockSystem, does not match outer scope rule: P/BlueShit
+	at org.eclipse.core.runtime.Assert.isLegal(Assert.java:63)
+	at org.eclipse.core.internal.jobs.ThreadJob.illegalPush(ThreadJob.java:134)
+	at org.eclipse.core.internal.jobs.ThreadJob.push(ThreadJob.java:333)
+	at org.eclipse.core.internal.jobs.ImplicitJobs.begin(ImplicitJobs.java:63)
+	at org.eclipse.core.internal.jobs.JobManager.beginRule(JobManager.java:290)
+	at org.eclipse.core.internal.resources.WorkManager.checkIn(WorkManager.java:118)
+	at org.eclipse.core.internal.resources.Workspace.prepareOperation(Workspace.java:2251)
+	at org.eclipse.core.internal.resources.Project.touch(Project.java:1401)
+	at org.eclipse.jdt.internal.core.JavaModelManager$EclipsePreferencesListener.preferenceChange(JavaModelManager.java:1526)
+	at org.eclipse.core.internal.preferences.EclipsePreferences$3.run(EclipsePreferences.java:896)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.firePreferenceEvent(EclipsePreferences.java:899)
+	at org.eclipse.core.internal.preferences.EclipsePreferences.put(EclipsePreferences.java:912)
+	at org.eclipse.jdt.internal.core.JavaModelManager.storePreference(JavaModelManager.java:4924)
+	at org.eclipse.jdt.internal.core.JavaModelManager.setOptions(JavaModelManager.java:4976)
+	at org.eclipse.jdt.core.JavaCore.setOptions(JavaCore.java:5621)
+	at org.eclipse.jdt.launching.JavaRuntime.updateCompliance(JavaRuntime.java:2817)
+	at org.eclipse.jdt.launching.JavaRuntime.initializeVMs(JavaRuntime.java:2776)
+	at org.eclipse.jdt.launching.JavaRuntime.getVMInstallTypes(JavaRuntime.java:537)
+	at org.eclipse.jdt.internal.launching.JREPreferenceModifyListener.preApply(JREPreferenceModifyListener.java:128)
+	at org.eclipse.core.internal.preferences.PreferencesService$4.run(PreferencesService.java:448)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.preferences.PreferencesService.firePreApplyEvent(PreferencesService.java:451)
+	at org.eclipse.core.internal.preferences.PreferencesService.applyPreferences(PreferencesService.java:121)
+	at org.eclipse.core.internal.resources.ProjectPreferences.read(ProjectPreferences.java:206)
+	at org.eclipse.core.internal.resources.ProjectPreferences.updatePreferences(ProjectPreferences.java:274)
+	at org.eclipse.core.internal.resources.File.updateMetadataFiles(File.java:411)
+	at org.eclipse.core.internal.localstore.RefreshLocalVisitor.visit(RefreshLocalVisitor.java:297)
+	at org.eclipse.core.internal.localstore.UnifiedTree.accept(UnifiedTree.java:109)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refreshResource(FileSystemResourceManager.java:920)
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.refresh(FileSystemResourceManager.java:904)
+	at org.eclipse.core.internal.resources.Resource.refreshLocal(Resource.java:1705)
+	at org.eclipse.core.internal.refresh.RefreshJob.runInWorkspace(RefreshJob.java:167)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:38)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SESSION 2015-07-15 20:02:12.271 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-15 20:02:54.738
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-15 20:02:54.739
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\renzdelbarrio'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2015-07-16 19:11:56.653 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-16 19:12:43.521
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-16 19:12:43.531
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\renzdelbarrio'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2015-07-16 21:07:17.069 -----------------------------------------------
+eclipse.buildId=4.4.2.M20150204-1700
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-16 21:07:59.668
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-07-16 21:07:59.688
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\renzdelbarrio'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.

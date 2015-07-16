@@ -8,32 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.doorlocksystem.MainActivity" >
 
-    <Button
-        android:id="@+id/deviceManager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/requestCode"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="Device Manager" />
-
-    <Button
-        android:id="@+id/requestCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lockUnlock"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Request Code" />
-
-    <Button
-        android:id="@+id/lockUnlock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Lock/Unlock" />
-
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -42,5 +16,31 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/logoDesc"
         android:src="@drawable/logo" />
-    
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Device Manager" 
+        android:onClick="openDeviceManager" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:text="Lock/Unlock"
+        android:onClick="openLockUnlock" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:text="Request Code"
+        android:onClick="openRequestCode" />
+
 </RelativeLayout>
