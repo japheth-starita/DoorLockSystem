@@ -18,27 +18,28 @@
         android:src="@drawable/logo" />
 
     <Button
+        android:id="@+id/deviceManager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="Device Manager"
-        android:onClick="turnOn" />
+        android:onCLick="turnON" />
 
     <Button
+        android:id="@+id/lockUnlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/requestCode"
         android:layout_centerHorizontal="true"
-        android:text="Lock/Unlock"
-        android:onClick="turnOn" />
+        android:text="Lock/Unlock" />
 
     <Button
+        android:id="@+id/requestCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/lockUnlock"
         android:layout_below="@+id/deviceManager"
-        android:text="Request Code"
-        android:onClick="turnOn" />
+        android:text="Request Code" />
     
 </RelativeLayout>

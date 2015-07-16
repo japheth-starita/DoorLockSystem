@@ -1961,7 +1961,7 @@ containing a value of this type.
         public static final int customPanel=0x7f090034;
         public static final int decor_content_parent=0x7f09003e;
         public static final int default_activity_button=0x7f090029;
-        public static final int deviceManager=0x7f090050;
+        public static final int deviceManager=0x7f090052;
         public static final int dialog=0x7f09001e;
         public static final int disableHome=0x7f09000d;
         public static final int dropdown=0x7f09001f;
@@ -1992,7 +1992,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f090007;
         public static final int progress_horizontal=0x7f090008;
         public static final int radio=0x7f09003a;
-        public static final int requestCode=0x7f090052;
+        public static final int requestCode=0x7f090050;
         public static final int screen=0x7f090015;
         public static final int scrollView=0x7f090032;
         public static final int search_badge=0x7f090044;

@@ -10,20 +10,45 @@ import android.content.Intent;
 import android.widget.Button;
 public class MainActivity extends ActionBarActivity {
 	
+	private Button onBT1;
+	private Button onBT2;
+	private Button onBT3;
 	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
 
-	public void turnOn(View view) {
-		if (!adapt.isEnabled()){
-			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
-		}
-	}
-	
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        onBT1 = (Button)findViewById(R.id.deviceManager);
+        onBT1.setOnClickListener(new View.OnClickListener() {
+			public void turnON(View v) {
+				if (!adapt.isEnabled()){
+					startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
+				}
+				
+			}
+		});
+        
+        onBT2 = (Button)findViewById(R.id.requestCode);
+        onBT2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (!adapt.isEnabled()){
+					startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
+				}
+				
+			}
+		});
+        
+        onBT3 = (Button)findViewById(R.id.lockUnlock);
+        onBT3.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (!adapt.isEnabled()){
+					startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
+				}
+				
+			}
+		});
     }
 
     @Override
