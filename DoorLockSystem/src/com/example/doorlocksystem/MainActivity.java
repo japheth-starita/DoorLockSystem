@@ -12,12 +12,21 @@ public class MainActivity extends ActionBarActivity {
 	
 	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
 
-	public void turnOn(View view) {
+	public void turnOn() {
 		if (!adapt.isEnabled()){
 			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
 		}
 	}
 	
+	public void openDeviceManager(View view) {
+		turnOn();
+	}
+	public void openLockUnlock(View view) {
+		turnOn();
+	}
+	public void openRequestCode(View view) {
+		turnOn();
+	}
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
