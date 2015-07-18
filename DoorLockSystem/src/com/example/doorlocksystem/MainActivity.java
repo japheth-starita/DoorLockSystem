@@ -5,12 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.content.Context;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.content.BroadcastReceiver;
+import java.util.Set;
 public class MainActivity extends ActionBarActivity {
 	
+	private static final int REQUEST_ENABLE_BT = 1;
 	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
+	final ArrayAdapter btArray = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+	final Set<BluetoothDevice> pairedDevices = adapt.getBondedDevices();
+	final IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+
 
 	public void turnOn() {
 		if (!adapt.isEnabled()){
@@ -18,14 +29,44 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}
 	
-	public void openDeviceManager(View view) {
+	public void discovDiv() {
+		Intent discoverableIntent = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+		startActivity(discoverableIntent);
+	}
+	
+	public void findDiv(){
+		if (pairedDevices.size() > 0){
+			for (BluetoothDevice device : pairedDevices){
+				btArray.add(device.getName() + "\n" + device.getAddress());
+			}
+		}
+	}
+	
+	public void onRecieve(Context context, Intent intent) {
+		String action = intent.getAction();
+		if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+			BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+			btArray.add(device.getName() + "\n" + device.getAddress());
+		}
+	}
+	
+	public void openTurnOn(View view) {
 		turnOn();
+		discovDiv();
+	}
+
+	public void openDeviceManager(View view) {
+		findDiv();
+		onRecieve();
 	}
 	public void openLockUnlock(View view) {
 		turnOn();
+		discovDiv();
 	}
 	public void openRequestCode(View view) {
 		turnOn();
+		discovDiv();
 	}
 	
     @Override

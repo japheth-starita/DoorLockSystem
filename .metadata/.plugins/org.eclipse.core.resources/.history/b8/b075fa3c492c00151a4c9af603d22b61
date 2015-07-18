@@ -1,0 +1,79 @@
+package com.example.doorlocksystem;
+
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+public class MainActivity extends ActionBarActivity {
+	
+	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
+	final ArrayAdapter btArray = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
+
+	public void turnOn() {
+		if (!adapt.isEnabled()){
+			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
+		}
+	}
+	
+	public void discovDiv() {
+		Intent discoverableIntent = new Intent (BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+		startActivity(discoverableIntent);
+	}
+	
+	public void pairDiv() {
+		if(adapt.isDiscovering()) {
+			adapt.cancelDiscovery();
+		}
+		else {
+			btArray.clear();
+			adapt.startDiscovery();
+		}
+	}
+	
+	public void openDeviceManager(View view) {
+		turnOn();
+		discovDiv();
+		pairDiv();
+	}
+	public void openLockUnlock(View view) {
+		turnOn();
+		discovDiv();
+	}
+	public void openRequestCode(View view) {
+		turnOn();
+		discovDiv();
+	}
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
