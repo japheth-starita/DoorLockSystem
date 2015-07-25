@@ -1,0 +1,7 @@
+package com.example.doorlocksystem;
+
+
+public class GUI_Properties {
+	private TextView status;
+	
+}

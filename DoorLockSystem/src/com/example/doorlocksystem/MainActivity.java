@@ -1,17 +1,16 @@
 package com.example.doorlocksystem;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.widget.Button;
-public class MainActivity extends ActionBarActivity {
-	
+public class MainActivity extends Activity {
 	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
-
+	
 	public void turnOn() {
 		if (!adapt.isEnabled()){
 			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
@@ -23,8 +22,13 @@ public class MainActivity extends ActionBarActivity {
 	}
 	public void openLockUnlock(View view) {
 		turnOn();
+		Intent intent = new Intent(this, LockUnlockActivity.class);
+		startActivity(intent);
 	}
 	public void openRequestCode(View view) {
+		turnOn();
+	}
+	public void SwitchBT(View view){
 		turnOn();
 	}
 	

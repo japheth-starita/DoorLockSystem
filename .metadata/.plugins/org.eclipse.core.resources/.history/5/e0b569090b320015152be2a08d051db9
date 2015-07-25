@@ -1,0 +1,16 @@
+package com.example.doorlocksystem;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+
+
+public class BluetoothFunctions extends Activity{
+	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
+	
+	public void turnOn() {
+		if (!adapt.isEnabled()){
+			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
+		}
+	}
+
+}

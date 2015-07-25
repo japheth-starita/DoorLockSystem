@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
@@ -23,6 +24,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".LockUnlockActivity"
+            android:label="@string/title_activity_lock_unlock" >
         </activity>
     </application>
 
