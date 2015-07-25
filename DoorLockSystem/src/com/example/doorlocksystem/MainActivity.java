@@ -1,17 +1,21 @@
 package com.example.doorlocksystem;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+<<<<<<< HEAD
 import android.content.Context;
+=======
+import android.app.Activity;
+>>>>>>> 20fb20a66bd54baa23cf827cf759a5d695a29511
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+<<<<<<< HEAD
 import android.content.BroadcastReceiver;
 import java.util.Set;
 public class MainActivity extends ActionBarActivity {
@@ -23,6 +27,11 @@ public class MainActivity extends ActionBarActivity {
 	final IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 
 
+=======
+public class MainActivity extends Activity {
+	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
+	
+>>>>>>> 20fb20a66bd54baa23cf827cf759a5d695a29511
 	public void turnOn() {
 		if (!adapt.isEnabled()){
 			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
@@ -62,11 +71,19 @@ public class MainActivity extends ActionBarActivity {
 	}
 	public void openLockUnlock(View view) {
 		turnOn();
+<<<<<<< HEAD
 		discovDiv();
+=======
+		Intent intent = new Intent(this, LockUnlockActivity.class);
+		startActivity(intent);
+>>>>>>> 20fb20a66bd54baa23cf827cf759a5d695a29511
 	}
 	public void openRequestCode(View view) {
 		turnOn();
 		discovDiv();
+	}
+	public void SwitchBT(View view){
+		turnOn();
 	}
 	
     @Override

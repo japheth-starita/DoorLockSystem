@@ -36,6 +36,7 @@
         android:onClick="openLockUnlock" />
 
     <Button
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button2"
@@ -43,6 +44,7 @@
         android:text="Request Code"
         android:onClick="openRequestCode" />
 
+<<<<<<< HEAD
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,5 +52,15 @@
         android:layout_centerHorizontal="true"
         android:onClick="openTurnOn"
         android:text="Turn On" />
+=======
+    <ToggleButton
+        android:id="@+id/btSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Enable Bluetooth"
+        android:onClick="SwitchBT"/>
+>>>>>>> 20fb20a66bd54baa23cf827cf759a5d695a29511
 
 </RelativeLayout>
