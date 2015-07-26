@@ -7,9 +7,11 @@ import android.view.View;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.widget.Button;
+import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
+	
+
 	
 	public void turnOn() {
 		if (!adapt.isEnabled()){
@@ -29,8 +31,16 @@ public class MainActivity extends Activity {
 		turnOn();
 	}
 	public void SwitchBT(View view){
-		turnOn();
+		ToggleButton onoff = (ToggleButton) findViewById(R.id.btSwitch);
+		if (onoff.isChecked()){
+			turnOn();
+		}
+		else{
+			adapt.disable();
+		}
 	}
+	
+	
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
