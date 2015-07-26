@@ -9,4 +9,5 @@
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.R.id"/>
+<fullyQualifiedTypeName name="android.widget.ToggleButton"/>
 </qualifiedTypeNameHistroy>
