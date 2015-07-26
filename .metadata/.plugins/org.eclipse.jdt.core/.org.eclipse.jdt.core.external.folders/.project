@@ -14,5 +14,10 @@
 			<type>2</type>
 			<location>C:/Users/Japhet PC/AppData/Local/Android/sdk/sources/android-22</location>
 		</link>
+		<link>
+			<name>.link1</name>
+			<type>2</type>
+			<location>D:/Undergrad/eclipseLUNA/sdk/sources/android-22</location>
+		</link>
 	</linkedResources>
 </projectDescription>
