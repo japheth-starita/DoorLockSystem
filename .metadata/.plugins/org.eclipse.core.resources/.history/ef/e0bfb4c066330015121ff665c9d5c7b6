@@ -7,6 +7,10 @@ import android.view.View;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+<<<<<<< HEAD
+=======
+import android.widget.Button;
+>>>>>>> master
 import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
