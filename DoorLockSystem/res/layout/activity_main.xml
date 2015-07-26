@@ -50,8 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:textOn="Disable Bluetooth"
-        android:textOff="Enable Bluetooth"
+        android:text="Bluetooth"
         android:onClick="SwitchBT"/>
 
 </RelativeLayout>
