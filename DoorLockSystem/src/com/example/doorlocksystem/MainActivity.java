@@ -9,62 +9,66 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.widget.ToggleButton;
 public class MainActivity extends Activity {
-	final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
-	
-
-	
-	public void turnOn() {
-		if (!adapt.isEnabled()){
-			startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 0);
-		}
-	}
-	
-	public void openDeviceManager(View view) {
-		turnOn();
-	}
-	public void openLockUnlock(View view) {
-		turnOn();
-		Intent intent = new Intent(this, LockUnlockActivity.class);
-		startActivity(intent);
-	}
-	public void openRequestCode(View view) {
-		turnOn();
-	}
-	public void SwitchBT(View view){
-		ToggleButton onoff = (ToggleButton) findViewById(R.id.btSwitch);
-		if (onoff.isChecked()){
-			turnOn();
-		}
-		else{
-			adapt.disable();
-		}
-	}
-	
-	
+	SystemMethods sm;
+	BluetoothAdapter adapt;
+	ToggleButton onoff;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        sm = new SystemMethods();
+        adapt = BluetoothAdapter.getDefaultAdapter();
+        onoff = (ToggleButton) findViewById(R.id.btSwitch);
+		checkBluetooth();
     }
-
+    
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onResume() {
+    	super.onResume();
+    	checkBluetooth();
     }
-
+    
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed(){
+    	adapt.disable();
+    	Intent intent = new Intent(Intent.ACTION_MAIN);
+    	intent.addCategory(Intent.CATEGORY_HOME);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	sm.delay(1);
+    	startActivity(intent);	
     }
+    
+    public void openDeviceManager(View view) {
+    	//TODO insert  intent activity
+	}
+    
+	public void openLockUnlock(View view) {
+		Intent intent = new Intent(this, LockUnlockActivity.class);
+		startActivity(intent);
+	}
+	
+	public void openRequestCode(View view) {
+		//TODO insert  intent activity
+	}
+	
+	public void SwitchBT(View view){
+		ToggleButton onoff = (ToggleButton) findViewById(R.id.btSwitch);
+		if (onoff.isChecked()){
+			adapt.enable();
+		}
+		else{
+			adapt.disable();
+		}
+	}
+    
+    public void checkBluetooth(){
+    	if (adapt.isEnabled()){
+    		onoff.setChecked(true);;
+    	}
+    	else{
+    		onoff.setChecked(false);
+    	}
+    }
+    
 }

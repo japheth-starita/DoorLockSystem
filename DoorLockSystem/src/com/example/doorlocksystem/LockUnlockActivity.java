@@ -1,6 +1,7 @@
 package com.example.doorlocksystem;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,35 +10,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LockUnlockActivity extends Activity {
-
+	BluetoothAdapter adapt;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lock_unlock);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.lock_unlock, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		adapt = BluetoothAdapter.getDefaultAdapter();
+		adapt.enable();
 	}
 	
 	public void checkPW(View view){
 		EditText pw = (EditText) findViewById(R.id.pw);
-		if (pw.getText().equals("1234")){
+		int pass = Integer.parseInt(pw.getText().toString());
+		if (pass == 1234){
 			TextView status = (TextView) findViewById(R.id.status);
 					status.setText("Status: Unlocked");
 		}

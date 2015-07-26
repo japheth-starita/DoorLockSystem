@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="logoDesc">Logo for Main Menu</string>
     <string name="title_activity_lock_unlock">LockUnlockActivity</string>
+    <string name="title_activity_device_manager">DeviceManagerActivity</string>
+    <string name="title_activity_request_code">RequestCodeActivity</string>
 
 </resources>

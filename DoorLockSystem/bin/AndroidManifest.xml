@@ -29,6 +29,14 @@
             android:name=".LockUnlockActivity"
             android:label="@string/title_activity_lock_unlock" >
         </activity>
+        <activity
+            android:name=".DeviceManagerActivity"
+            android:label="@string/title_activity_device_manager" >
+        </activity>
+        <activity
+            android:name=".RequestCodeActivity"
+            android:label="@string/title_activity_request_code" >
+        </activity>
     </application>
 
 </manifest>

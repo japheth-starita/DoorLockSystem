@@ -7,12 +7,22 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.doorlocksystem.MainActivity" >
-
+	
+    <ToggleButton
+        android:id="@+id/btSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:textOn="BT"
+        android:textOff="BT"
+        android:onClick="SwitchBT"/>
+    
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/btSwitch"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/logoDesc"
         android:src="@drawable/logo" />
@@ -44,14 +54,6 @@
         android:text="Request Code"
         android:onClick="openRequestCode" />
 
-    <ToggleButton
-        android:id="@+id/btSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:textOn="Bluetooth"
-        android:textOff="Bluetooth"
-        android:onClick="SwitchBT"/>
+    
 
 </RelativeLayout>
