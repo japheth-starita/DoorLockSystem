@@ -1,0 +1,22 @@
+package com.example.doorlocksystem;
+
+import java.util.ArrayList;
+
+import android.app.Activity; 
+import android.bluetooth.BluetoothAdapter;
+import android.os.Bundle;
+import android.widget.ListView;
+
+public class DeviceManagerActivity extends Activity {
+	
+	private ListView listview;
+    private ArrayList<String> mDeviceList = new ArrayList<String>();
+    private BluetoothAdapter mBluetoothAdapter;
+	
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_device_manager);
+	}
+}

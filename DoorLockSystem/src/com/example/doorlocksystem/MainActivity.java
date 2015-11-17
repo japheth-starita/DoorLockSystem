@@ -1,8 +1,6 @@
 package com.example.doorlocksystem;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -40,7 +38,8 @@ public class MainActivity extends Activity {
     }
     
     public void openDeviceManager(View view) {
-    	//TODO insert  intent activity
+    	Intent intent = new Intent(this, DeviceManagerActivity.class);
+		startActivity(intent);
 	}
     
 	public void openLockUnlock(View view) {
