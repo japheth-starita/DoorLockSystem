@@ -8,5 +8,6 @@
     <string name="title_activity_lock_unlock">LockUnlockActivity</string>
     <string name="title_activity_device_manager">DeviceManagerActivity</string>
     <string name="title_activity_request_code">RequestCodeActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>

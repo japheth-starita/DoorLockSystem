@@ -1,5 +1,7 @@
 package com.example.doorlocksystem;
 
+import java.util.Set;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -15,17 +17,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class DeviceManagerActivity extends Activity {
+	private static final int REQUEST_ENABLE_BT = 1;
+	ListView listDevicesFound;
+	Button btnScanDevice;
+	TextView stateBluetooth;
+	BluetoothAdapter bluetoothAdapter;
  
- private static final int REQUEST_ENABLE_BT = 1;
+	ArrayAdapter<String> btArrayAdapter;
  
-    ListView listDevicesFound;
- Button btnScanDevice;
- TextView stateBluetooth;
- BluetoothAdapter bluetoothAdapter;
- 
- ArrayAdapter<String> btArrayAdapter;
- 
- /** Called when the activity is first created. */
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,66 +43,88 @@ public class DeviceManagerActivity extends Activity {
         CheckBlueToothState();
         
         btnScanDevice.setOnClickListener(btnScanDeviceOnClickListener);
-
+        
         registerReceiver(ActionFoundReceiver, 
-          new IntentFilter(BluetoothDevice.ACTION_FOUND));
+          new IntentFilter(BluetoothDevice.ACTION_FOUND)
+        );
+        getPairedDevices();
     }
     
     @Override
- protected void onDestroy() {
-  // TODO Auto-generated method stub
-  super.onDestroy();
-  unregisterReceiver(ActionFoundReceiver);
- }
+    protected void onDestroy() {
+    	// TODO Auto-generated method stub
+    	super.onDestroy();
+    	unregisterReceiver(ActionFoundReceiver);
+    }
 
- private void CheckBlueToothState(){
-     if (bluetoothAdapter == null){
-         stateBluetooth.setText("Bluetooth NOT support");
-        }else{
-         if (bluetoothAdapter.isEnabled()){
-          if(bluetoothAdapter.isDiscovering()){
-           stateBluetooth.setText("Bluetooth is currently in device discovery process.");
-          }else{
-           stateBluetooth.setText("Bluetooth is Enabled.");
-           btnScanDevice.setEnabled(true);
-          }
-         }else{
-          stateBluetooth.setText("Bluetooth is NOT Enabled!");
-          Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-         }
+    private void CheckBlueToothState(){
+    	if (bluetoothAdapter == null){
+    		stateBluetooth.setText("Bluetooth NOT support");
+        }
+    	else{
+    		if (bluetoothAdapter.isEnabled()){
+    			if(bluetoothAdapter.isDiscovering()){
+    				stateBluetooth.setText("Bluetooth is currently in device discovery process.");
+    			}
+    			else{
+    				stateBluetooth.setText("Bluetooth is Enabled.");
+    				btnScanDevice.setEnabled(true);
+    			}
+    		}
+    		else{
+    			stateBluetooth.setText("Bluetooth is NOT Enabled!");
+    			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+    			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+    		}
         }
     }
     
-    private Button.OnClickListener btnScanDeviceOnClickListener
-    = new Button.OnClickListener(){
+    private Button.OnClickListener btnScanDeviceOnClickListener = new Button.OnClickListener(){
 
-  @Override
-  public void onClick(View arg0) {
-   // TODO Auto-generated method stub
-   btArrayAdapter.clear();
-   bluetoothAdapter.startDiscovery();
-  }};
+    	@Override
+    	public void onClick(View arg0) {
+    		// TODO Auto-generated method stub
+    		btArrayAdapter.clear();
+    		getPairedDevices();
+    		bluetoothAdapter.startDiscovery();
+    	}
+    };
 
- @Override
- protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-  // TODO Auto-generated method stub
-  if(requestCode == REQUEST_ENABLE_BT){
-   CheckBlueToothState();
-  }
- }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	// TODO Auto-generated method stub
+    	if(requestCode == REQUEST_ENABLE_BT){
+    		CheckBlueToothState();
+    	}
+    }
     
- private final BroadcastReceiver ActionFoundReceiver = new BroadcastReceiver(){
+    private final BroadcastReceiver ActionFoundReceiver = new BroadcastReceiver(){
 
-  @Override
-  public void onReceive(Context context, Intent intent) {
-   // TODO Auto-generated method stub
-   String action = intent.getAction();
-   if(BluetoothDevice.ACTION_FOUND.equals(action)) {
-             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-             btArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-             btArrayAdapter.notifyDataSetChanged();
+    	@Override
+    	public void onReceive(Context context, Intent intent) {
+    		// TODO Auto-generated method stub
+    		String action = intent.getAction();
+    		if(BluetoothDevice.ACTION_FOUND.equals(action)) {
+    			BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+    			btArrayAdapter.add(device.getName());
+    			btArrayAdapter.notifyDataSetChanged();
          }
-  }};
+    	}
+    };
     
+    //Add Paired Devices to Array Adapter
+    public void getPairedDevices(){
+    	Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+    	// If there are paired devices
+    	if (pairedDevices.size() > 0) {
+    	    // Loop through paired devices
+    	    for (BluetoothDevice device : pairedDevices) {
+    	        // Add the name and address to an array adapter to show in a ListView
+    	        btArrayAdapter.add(device.getName());
+    	        btArrayAdapter.notifyDataSetChanged();
+    	    }
+    	}
+    }
+    
+  
 }

@@ -38,7 +38,7 @@ public class MainActivity extends Activity {
     }
     
     public void openDeviceManager(View view) {
-    	Intent intent = new Intent(this, DeviceManagerActivity.class);
+    	Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
     

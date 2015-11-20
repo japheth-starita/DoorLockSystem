@@ -14,4 +14,16 @@ public class SystemMethods {
 		 
 		}, delay);
 	}
+	
+	public boolean CheckAdminPassword(String user, String pw){
+		if ((user.equals("admin")) && (pw.equals("admin"))){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+
+	
 }

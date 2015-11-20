@@ -1,0 +1,27 @@
+package com.example.doorlocksystem;
+
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+public class LoginActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_login);
+	}
+
+	//Check Admin Password and Username
+    public void submitAdmin(View view){
+    	SystemMethods sm = new SystemMethods();
+    	TextView admin_user = (TextView) findViewById(R.id.user);
+    	TextView admin_pw = (TextView) findViewById(R.id.pw);
+    	if (sm.CheckAdminPassword(admin_user.getText().toString(),
+    			admin_pw.getText().toString())){
+    		setContentView(R.layout.activity_device_manager);
+    	}
+    }
+}
