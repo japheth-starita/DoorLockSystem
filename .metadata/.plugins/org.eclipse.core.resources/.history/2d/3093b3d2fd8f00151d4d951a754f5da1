@@ -1,0 +1,30 @@
+package com.example.doorlocksystem;
+
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+
+public class DeviceManagerActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_device_manager);
+		
+		ListView option = (ListView)findViewById(R.id.optiondm);
+		
+		
+        ArrayAdapter<String> optionArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        option.setAdapter(optionArrayAdapter);
+        optionArrayAdapter.add("Add Device");
+        optionArrayAdapter.add("Manage Device");
+        
+        
+	}
+
+	
+}

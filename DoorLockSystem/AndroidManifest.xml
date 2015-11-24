@@ -41,6 +41,10 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        <activity
+            android:name=".AddDeviceActivity"
+            android:label="@string/title_activity_add_device" >
+        </activity>
     </application>
 
 </manifest>

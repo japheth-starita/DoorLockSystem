@@ -9,5 +9,6 @@
     <string name="title_activity_device_manager">DeviceManagerActivity</string>
     <string name="title_activity_request_code">RequestCodeActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_add_device">AddDeviceActivity</string>
 
 </resources>
