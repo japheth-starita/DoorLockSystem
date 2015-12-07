@@ -17,22 +17,48 @@
         android:text="Status: Locked"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <EditText
-        android:id="@+id/pw"
+    <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="4"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:inputType="numberPassword" />
+        android:layout_centerInParent="true" >
 
+        <EditText
+            android:id="@+id/pw1"
+            style="@style/EditTextStyle"
+            android:layout_alignParentLeft="true" >
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/pw2"
+            style="@style/EditTextStyle"
+            android:layout_toRightOf="@+id/pw1" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/pw3"
+            style="@style/EditTextStyle"
+            android:layout_toRightOf="@+id/pw2" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/pw4"
+            style="@style/EditTextStyle"
+            android:imeOptions="actionGo"
+            android:layout_toRightOf="@+id/pw3" >
+        </EditText>
+        
+    </RelativeLayout>
     <Button
         android:id="@+id/sendPW"
+        android:layout_below="@+id/rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pw"
         android:layout_centerHorizontal="true"
-        android:text="Unlock" 
-        android:onClick="checkPW"/>
+        android:text="Submit"
+        android:onClick="checkPass" />
+
+    
 
 </RelativeLayout>

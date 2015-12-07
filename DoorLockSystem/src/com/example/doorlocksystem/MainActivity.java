@@ -48,7 +48,8 @@ public class MainActivity extends Activity {
 	}
 	
 	public void openRequestCode(View view) {
-		//TODO insert  intent activity
+		Intent intent = new Intent(this, RequestCodeActivity.class);
+		startActivity(intent);
 	}
 	
 	public void SwitchBT(View view){

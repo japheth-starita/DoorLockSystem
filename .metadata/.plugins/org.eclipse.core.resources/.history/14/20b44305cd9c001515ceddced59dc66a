@@ -1,0 +1,45 @@
+package com.example.doorlocksystem;
+
+import java.io.IOException;
+import java.util.UUID;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+
+public class ConnectThread extends Thread {
+	private final BluetoothSocket mmSocket;
+	private final BluetoothDevice mmDevice;
+	private final BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();
+	private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+	public ConnectThread(BluetoothDevice device) {
+		BluetoothSocket tmp = null;
+		mmDevice = device;
+		try {
+			tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
+		} catch (IOException e) { }
+		
+		mmSocket = tmp;
+	}
+	
+	public void run() {
+		adapt.cancelDiscovery();
+		try {
+			mmSocket.connect();
+		} 
+		catch (IOException connectException) {
+			try {
+				mmSocket.close();
+			} catch (IOException closeException) { }
+		return;
+		}
+		ConnectedThread mConnectedThread = new ConnectedThread(mmSocket);
+		mConnectedThread.start();
+	}
+	public void cancel() {
+		try {
+			mmSocket.close();
+		} 
+		catch (IOException e) { }
+	}	
+}

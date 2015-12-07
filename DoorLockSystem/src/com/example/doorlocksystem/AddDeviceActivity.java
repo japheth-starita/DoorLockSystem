@@ -47,7 +47,6 @@ public class AddDeviceActivity extends Activity {
         registerReceiver(ActionFoundReceiver, 
           new IntentFilter(BluetoothDevice.ACTION_FOUND)
         );
-        getPairedDevices();
     }
     
     @Override
@@ -85,7 +84,6 @@ public class AddDeviceActivity extends Activity {
     	public void onClick(View arg0) {
     		// TODO Auto-generated method stub
     		btArrayAdapter.clear();
-    		getPairedDevices();
     		bluetoothAdapter.startDiscovery();
     	}
     };
@@ -106,25 +104,10 @@ public class AddDeviceActivity extends Activity {
     		String action = intent.getAction();
     		if(BluetoothDevice.ACTION_FOUND.equals(action)) {
     			BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-    			btArrayAdapter.add(device.getName());
+    			btArrayAdapter.add(device.getName()+"\nTap to Register");
     			btArrayAdapter.notifyDataSetChanged();
          }
     	}
     };
     
-    //Add Paired Devices to Array Adapter
-    public void getPairedDevices(){
-    	Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
-    	// If there are paired devices
-    	if (pairedDevices.size() > 0) {
-    	    // Loop through paired devices
-    	    for (BluetoothDevice device : pairedDevices) {
-    	        // Add the name and address to an array adapter to show in a ListView
-    	        btArrayAdapter.add(device.getName());
-    	        btArrayAdapter.notifyDataSetChanged();
-    	    }
-    	}
-    }
-    
-  
 }

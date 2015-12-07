@@ -10,12 +10,12 @@
 	
     <ToggleButton
         android:id="@+id/btSwitch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:textOn="BT"
-        android:textOff="BT"
+        android:textOn="Disable Bluetooth"
+        android:textOff="Enable Bluetooth"
         android:onClick="SwitchBT"/>
     
     <ImageView
@@ -29,16 +29,16 @@
 
     <Button
         android:id="@+id/button1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Device Manager" 
+        android:text="Device Manager"
         android:onClick="openDeviceManager" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
@@ -47,12 +47,12 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true"
         android:text="Request Code"
-        android:onClick="openRequestCode" />
+        android:onClick="openRequestCode"/>
 
     
 
