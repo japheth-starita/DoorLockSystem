@@ -89,7 +89,6 @@ public class RequestCodeActivity extends Activity {
 			}
 		}
 		
-		//Stop Connection With Bluetooth Device
 		public void cancel() {
 			try {
 				mmSocket.close();
