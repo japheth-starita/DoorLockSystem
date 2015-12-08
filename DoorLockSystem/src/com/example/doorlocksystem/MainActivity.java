@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
 	}
     
 	public void openLockUnlock(View view) {
-		Intent intent = new Intent(this, LockUnlockActivity.class);
-		startActivity(intent);
+		//Intent intent = new Intent(this, LockUnlockActivity.class);
+		//startActivity(intent);
 	}
 	
 	public void openRequestCode(View view) {

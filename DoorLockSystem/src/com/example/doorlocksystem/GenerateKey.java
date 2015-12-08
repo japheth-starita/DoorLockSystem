@@ -19,7 +19,7 @@ public class GenerateKey {
 	private int genprivateNum(){
 		Random r = new Random();
 		int min = 10;
-		int max = 100;
+		int max = 97; //highest 2-digit prime number
 		int ran = r.nextInt(max - min + 1) + min;
 		while(!(isPrime(ran))){
 		

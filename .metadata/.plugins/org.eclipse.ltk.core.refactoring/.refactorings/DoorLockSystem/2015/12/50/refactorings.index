@@ -2,3 +2,6 @@
 1449478699907	Encapsulate field 'privateKey'
 1449481976354	Delete element
 1449484007536	Delete elements
+1449539434016	Rename compilation unit 'BluetoothService.java'
+1449539683229	Rename compilation unit 'ConnectThread.java'
+1449539697500	Rename type 'ConnectedThread'
