@@ -6,22 +6,27 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TextView.OnEditorActionListener;
 
 public class LockUnlockActivity extends Activity {
 	BluetoothAdapter adapt;
-	EditText pw1;
-	EditText pw2;
-	EditText pw3;
-	EditText pw4;
+	EditText pw1, pw2, pw3, pw4, pw5;
+	TextView lockstatus;
+	Button submitCode;
+	Handler inputStreamHandler;
+	BluetoothAdapter mBluetoothAdapter;
+	BluetoothDevice btModule;
+	ConnectToDevice mConnectThread;
+	int productKey;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +34,13 @@ public class LockUnlockActivity extends Activity {
 		setContentView(R.layout.activity_lock_unlock);
 		adapt = BluetoothAdapter.getDefaultAdapter();
 		adapt.enable();
+		submitCode = (Button) findViewById(R.id.sendPW);
 		pw1 = (EditText) findViewById(R.id.pw1);
 		pw2 = (EditText) findViewById(R.id.pw2);
 		pw3 = (EditText) findViewById(R.id.pw3);
 		pw4 = (EditText) findViewById(R.id.pw4);
-		
-		
-		Set<BluetoothDevice> pairedDevices = adapt.getBondedDevices();
-		if (pairedDevices.size() > 0) {
-			for (BluetoothDevice device : pairedDevices) {
-			BluetoothDevice mDevice = device;
-			}
-		}
+		pw5 = (EditText) findViewById(R.id.pw5);
+		lockstatus = (TextView) findViewById(R.id.status);
 		
 		pw1.addTextChangedListener(new TextWatcher() {	
 			@Override
@@ -99,40 +99,90 @@ public class LockUnlockActivity extends Activity {
 			}
 		});
 		
-		pw4.setOnEditorActionListener(new OnEditorActionListener() {
-
-		    @Override
-		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		        boolean handled = false;
-		        if (actionId == EditorInfo.IME_ACTION_GO) {
-		            checkPublicKey();
-		            handled = true;
-		        }
-		        return handled;
-		    }
+		pw4.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(count>0){
+					((EditText) findViewById(R.id.pw5)).requestFocus();
+				}
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub	
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+			}
 		});
-		
-
 	}
 	
 	public void checkPass(View view){
-		checkPublicKey();
+		sendProductKey();
 	}
 	
-	public void checkPublicKey(){
-		if (checkEditText()){
-			int pass = Integer.parseInt((pw1.getText().toString()+pw2.getText().toString()+
-					pw3.getText().toString()+pw4.getText().toString()));
-			if (pass == 1234){
-				TextView status = (TextView) findViewById(R.id.status);
-						status.setText("Status: Unlocked");
+	public void sendProductKey(){
+		disableWidget();
+		if(checkPublicKey()){
+			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			BluetoothService bs = new BluetoothService();
+			if(bs.isthereBluetooth(mBluetoothAdapter)){
+				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+				if (pairedDevices.size() > 0) {
+					for (BluetoothDevice device : pairedDevices) {
+						 if(device.getName().equals("HC-05")) 
+			                {
+			                    btModule = device;
+			                    break;
+			                }
+					}
+				}
+	
+				//Parameters are btModule - device to be connected
+				//mBluetoothAdapter - BluetoothAdapter
+				mConnectThread = new ConnectToDevice(btModule, 
+						mBluetoothAdapter, SignalToArduino.SEND_PRODKEY + productKey, mHandler);
+				GenerateKey.resetKey();
+				//Connect to Bluetooth Module
+				mConnectThread.start();
+				
+			}
+			else{
+				Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	
+	public void disableWidget(){
+		pw1.setEnabled(false);
+		pw2.setEnabled(false);
+		pw3.setEnabled(false);
+		pw4.setEnabled(false);
+		pw5.setEnabled(false);
+		submitCode.setEnabled(false);
+	}
+	
+	public boolean checkPublicKey(){
+		if(pw5.getText().toString().equals(
+				(getSharedPreferences(MainActivity.PREFS_NAME,MODE_PRIVATE).getString("verifychar","0")))){
+			if (checkEditText()){
+						int passcode = (Integer.parseInt((pw1.getText().toString()+pw2.getText().toString()+
+						pw3.getText().toString()+pw4.getText().toString())));
+						Log.d("Int", passcode+"");
+						Log.d("Int", GenerateKey.getPrivateKey()*passcode+"");
+						productKey = GenerateKey.getPrivateKey()*passcode;
+				return true;
 			}
 			else{
 				clearEditText();
+				return false;
+				
 			}
 		}
 		else{
-			clearEditText();
+			Toast.makeText(LockUnlockActivity.this, ErrorCode.E60, Toast.LENGTH_SHORT).show();
+			return false;
 		}
 	}
 	
@@ -142,7 +192,8 @@ public class LockUnlockActivity extends Activity {
 					pw3.getText().toString()+pw4.getText().toString()));
 			return true;
 		} catch (Exception e) {
-			Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT ).show();
+			Log.d("Check", "Invalid");
+			Toast.makeText(this, ErrorCode.E60, Toast.LENGTH_SHORT ).show();
 			return false;
 		}
 	}
@@ -152,7 +203,35 @@ public class LockUnlockActivity extends Activity {
 		pw2.setText("");
 		pw3.setText("");
 		pw4.setText("");
+		pw5.setText("");
 		pw1.requestFocus();
 	}
+	
+	//BT Connection ceases when user
+	//presses back button
+	@Override
+    public void onBackPressed(){
+		closeAll();
+	}
+	
+	public Handler mHandler = new Handler() {
+		  public void handleMessage(Message msg) {
+			  String data = (String) msg.obj;
+			  if (data.trim().equals("1")){
+				  Toast.makeText(LockUnlockActivity.this, "Door Unlocked", Toast.LENGTH_LONG).show();
+			  }
+			  else{
+				  Toast.makeText(LockUnlockActivity.this, ErrorCode.E60, Toast.LENGTH_LONG).show();
+			  }
+			  closeAll();
+		  }
+	  };
+	  
+	  public void closeAll(){
+		  try{
+				mConnectThread.cancel();
+			}catch(Exception e){}		
+			finish();
+	  }
 }
 

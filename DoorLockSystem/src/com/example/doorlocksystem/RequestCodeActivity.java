@@ -26,17 +26,20 @@ public class RequestCodeActivity extends Activity {
 	BluetoothAdapter mBluetoothAdapter;
 	BluetoothDevice btModule;
 	ConnectToDevice mConnectThread;
-    TextView pubKey;
-	TextView privKey;
-	static String receivedata;
+    TextView pubKey, privKey;
+	Button gotoLockUnlock;
+	ProgressBar progBar;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_request_code);
+		progBar = (ProgressBar) findViewById(R.id.progBar);
+		gotoLockUnlock = (Button) findViewById(R.id.gotoLockUnlock);
+		gotoLockUnlock.setEnabled(false);
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		BluetoothService bs = new BluetoothService();
-				if(bs.isthereBluetooth(mBluetoothAdapter)){
+		if(bs.isthereBluetooth(mBluetoothAdapter)){
 			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 			if (pairedDevices.size() > 0) {
 				for (BluetoothDevice device : pairedDevices) {
@@ -47,29 +50,27 @@ public class RequestCodeActivity extends Activity {
 		                }
 				}
 			}
+			
 			pubKey = (TextView) findViewById(R.id.pubKey);
 			privKey = (TextView) findViewById(R.id.privKey);
 
 			//Parameters are btModule - device to be connected
 			//mBluetoothAdapter - BluetoothAdapter
-			//true - if app is sending its private key
-			//false - if app is sending its product key
-			mConnectThread = new ConnectToDevice(btModule, mBluetoothAdapter,true,mHandler);
+			GenerateKey.genprivateNum();
+			mConnectThread = new ConnectToDevice(btModule, 
+					mBluetoothAdapter, SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey(), mHandler);
 			//Connect to Bluetooth Module
 			mConnectThread.start();
 			Toast.makeText(getApplicationContext(), "Connecting", Toast.LENGTH_LONG).show();
-			
-		    //generatingPrivateCode countingTask = new generatingPrivateCode(); // create a new task
-		    //countingTask.execute(values);
 		}
 		else{
-			Toast.makeText(getApplicationContext(), "No Bluetooth Found", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
 		}
 	}
 	
 	public void gotoLockUnlockActivity(View view){
-		//when user goes to another activity
 		Intent intent = new Intent(this, LockUnlockActivity.class);
+		closeAll();
 		startActivity(intent);
 	}
 	
@@ -77,22 +78,27 @@ public class RequestCodeActivity extends Activity {
 	//presses back button
 	@Override
     public void onBackPressed(){
-		try{
-			mConnectThread.cancel();
-		}catch(Exception e){}
-		
-		finish();
+		closeAll();
 	}
 	
 	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
-			  switch (msg.what) {
-		        case 1: 
 		          String data = (String) msg.obj;
-		          pubKey.setText(""+data);
-		      }
+		          pubKey.setText(data);
+		          progBar.setVisibility(View.GONE);
+		          try{
+		        	  gotoLockUnlock.setEnabled(true);
+		          }catch(Exception e){}
 		    }
 	  };
+	  
+	  
+	  public void closeAll(){
+		  try{
+				mConnectThread.cancel();
+			}catch(Exception e){}		
+			finish();
+	  }
 
 }
 

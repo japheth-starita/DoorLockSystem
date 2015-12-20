@@ -45,8 +45,14 @@
         <EditText
             android:id="@+id/pw4"
             style="@style/EditTextStyle"
-            android:imeOptions="actionGo"
             android:layout_toRightOf="@+id/pw3" >
+        </EditText>
+        
+        <EditText
+            android:id="@+id/pw5"
+            style="@style/EditTextStyle"
+            android:inputType="text"
+            android:layout_toRightOf="@+id/pw4" >
         </EditText>
         
     </RelativeLayout>

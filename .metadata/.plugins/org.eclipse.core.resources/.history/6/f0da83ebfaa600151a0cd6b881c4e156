@@ -1,0 +1,240 @@
+package com.example.doorlocksystem;
+
+import java.util.Set;
+
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.TextView.OnEditorActionListener;
+
+public class LockUnlockActivity extends Activity {
+	BluetoothAdapter adapt;
+	EditText pw1, pw2, pw3, pw4, pw5;
+	TextView lockstatus;
+	Handler inputStreamHandler;
+	BluetoothAdapter mBluetoothAdapter;
+	BluetoothDevice btModule;
+	ConnectToDevice mConnectThread;
+	int productKey;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_lock_unlock);
+		adapt = BluetoothAdapter.getDefaultAdapter();
+		adapt.enable();
+		pw1 = (EditText) findViewById(R.id.pw1);
+		pw2 = (EditText) findViewById(R.id.pw2);
+		pw3 = (EditText) findViewById(R.id.pw3);
+		pw4 = (EditText) findViewById(R.id.pw4);
+		pw5 = (EditText) findViewById(R.id.pw5);
+		lockstatus = (TextView) findViewById(R.id.status);
+		
+		pw1.addTextChangedListener(new TextWatcher() {	
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(count>0){
+					((EditText) findViewById(R.id.pw2)).requestFocus();
+				}
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		pw2.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(count>0){
+					((EditText) findViewById(R.id.pw3)).requestFocus();
+				}
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub	
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+	
+			}
+		});
+	
+		pw3.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(count>0){
+					((EditText) findViewById(R.id.pw4)).requestFocus();
+				}
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub	
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		pw4.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(count>0){
+					((EditText) findViewById(R.id.pw5)).requestFocus();
+				}
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub	
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
+		pw5.setOnEditorActionListener(new OnEditorActionListener() {
+
+		    @Override
+		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		        boolean handled = false;
+		        if (actionId == EditorInfo.IME_ACTION_GO) {
+		            checkPublicKey();
+		            handled = true;
+		        }
+		        return handled;
+		    }
+		});
+		
+	}
+	
+	public void checkPass(View view){
+		if(checkPublicKey()){
+			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+			BluetoothService bs = new BluetoothService();
+			if(bs.isthereBluetooth(mBluetoothAdapter)){
+				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+				if (pairedDevices.size() > 0) {
+					for (BluetoothDevice device : pairedDevices) {
+						 if(device.getName().equals("HC-05")) 
+			                {
+			                    btModule = device;
+			                    break;
+			                }
+					}
+				}
+	
+				//Parameters are btModule - device to be connected
+				//mBluetoothAdapter - BluetoothAdapter
+				Toast.makeText(getApplicationContext(), productKey+"", Toast.LENGTH_LONG).show();
+				mConnectThread = new ConnectToDevice(btModule, 
+						mBluetoothAdapter, SignalToArduino.SEND_PRODKEY + productKey, mHandler);
+				GenerateKey.resetKey();
+				//Connect to Bluetooth Module
+				mConnectThread.start();
+				
+			}
+			else{
+				Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	
+	public boolean checkPublicKey(){
+		if(pw5.getText().toString().equals(
+				(getSharedPreferences(MainActivity.PREFS_NAME,MODE_PRIVATE).getString("verifychar","0")))){
+			if (checkEditText()){
+						int passcode = (Integer.parseInt((pw1.getText().toString()+pw2.getText().toString()+
+						pw3.getText().toString()+pw4.getText().toString())));
+						Log.d("Int", passcode+"");
+						Log.d("Int", GenerateKey.getPrivateKey()*passcode+"");
+						productKey = GenerateKey.getPrivateKey()*passcode;
+				return true;
+			}
+			else{
+				clearEditText();
+				return false;
+				
+			}
+		}
+		else{
+			Log.d("Verify", "Invalid");
+			String b = getSharedPreferences(MainActivity.PREFS_NAME,MODE_PRIVATE).getString("verifychar","0");
+			Toast.makeText(LockUnlockActivity.this, ErrorCode.E60+b, Toast.LENGTH_SHORT).show();
+			return false;
+		}
+	}
+	
+	public boolean checkEditText(){
+		try {
+			Integer.parseInt((pw1.getText().toString()+pw2.getText().toString()+
+					pw3.getText().toString()+pw4.getText().toString()));
+			return true;
+		} catch (Exception e) {
+			Log.d("Check", "Invalid");
+			Toast.makeText(this, ErrorCode.E60, Toast.LENGTH_SHORT ).show();
+			return false;
+		}
+	}
+	
+	public void clearEditText(){
+		pw1.setText("");
+		pw2.setText("");
+		pw3.setText("");
+		pw4.setText("");
+		pw5.setText("");
+		pw1.requestFocus();
+	}
+	
+	//BT Connection ceases when user
+	//presses back button
+	@Override
+    public void onBackPressed(){
+		closeAll();
+	}
+	
+	public Handler mHandler = new Handler() {
+		  public void handleMessage(Message msg) {
+			  String data = (String) msg.obj;
+			  if (data.equals("0")){
+				  Toast.makeText(LockUnlockActivity.this, "Door Unlocked" + data, Toast.LENGTH_LONG).show();
+			  }
+			  else{
+				  Toast.makeText(LockUnlockActivity.this, ErrorCode.E60+data, Toast.LENGTH_LONG).show();
+			  }
+			  closeAll();
+		  }
+	  };
+	  
+	  public void closeAll(){
+		  try{
+				mConnectThread.cancel();
+			}catch(Exception e){}		
+			finish();
+	  }
+}
+

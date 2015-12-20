@@ -1,15 +1,21 @@
 package com.example.doorlocksystem;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 public class MainActivity extends Activity {
 	SystemMethods sm;
 	BluetoothAdapter adapt;
 	ToggleButton onoff;
+	public static final String PREFS_NAME = "PREFERENCES";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +25,16 @@ public class MainActivity extends Activity {
         adapt = BluetoothAdapter.getDefaultAdapter();
         onoff = (ToggleButton) findViewById(R.id.btSwitch);
 		checkBluetooth();
+		boolean isFirstRun = getSharedPreferences(PREFS_NAME,MODE_PRIVATE).getBoolean("isfirstrun", true);
+		Toast.makeText(MainActivity.this,isFirstRun+"", Toast.LENGTH_SHORT).show();
+		InputUserVerification userverify = new InputUserVerification();
+		if(isFirstRun){
+			userverify.showInputDialogBox(isFirstRun, MainActivity.this, mHandler);
+		      SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
+		      editor.putString("verifychar", userverify.getVerifyChar());
+		      editor.putBoolean("isfirstrun", false);
+		      editor.commit();
+		}
     }
     
     @Override
@@ -30,11 +46,7 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed(){
     	adapt.disable();
-    	Intent intent = new Intent(Intent.ACTION_MAIN);
-    	intent.addCategory(Intent.CATEGORY_HOME);
-    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	sm.delay(1);
-    	startActivity(intent);	
+    	finish();
     }
     
     public void openDeviceManager(View view) {
@@ -70,5 +82,20 @@ public class MainActivity extends Activity {
     		onoff.setChecked(false);
     	}
     }
+    
+    public Handler mHandler = new Handler() {
+		  public void handleMessage(Message msg) {
+			  switch (msg.what) {
+		        case 1: 
+		          String data = (String) msg.obj;
+		          SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
+			      editor.putString("verifychar", data);
+			      editor.commit();
+			      Log.d("Received", "OK");
+		      }
+		    }
+	  };
+    
+    
     
 }

@@ -1,9 +1,0 @@
-package com.example.doorlocksystem;
-
-import android.bluetooth.BluetoothAdapter;
-
-public class BluetoothService {
-	public boolean checkBluetooth(){
-		BluetoothAdapter adapt = BluetoothAdapter.getDefaultAdapter();;
-	}
-}

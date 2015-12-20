@@ -6,10 +6,6 @@ import java.io.OutputStream;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
-import android.widget.TextView;
 
 public class DeviceConnected extends Thread {
 	private Handler mHandler;
