@@ -2,22 +2,22 @@ package com.example.doorlocksystem;
 
 import java.io.IOException;
 import java.util.UUID;
+
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.util.Log;
 
 public class ConnectToDevice extends Thread{
 	private BluetoothAdapter mBluetoothAdapter;
 	private DeviceConnected mConnectedThread;
 	private Handler mhandler;
-	private String data;
 	private final BluetoothSocket mmSocket;
 	private final BluetoothDevice mmDevice;
 	private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 		
-	public ConnectToDevice(BluetoothDevice device, BluetoothAdapter bt, String dataToBeSent, Handler mhandler) {
-		this.data = dataToBeSent;
+	public ConnectToDevice(BluetoothDevice device, BluetoothAdapter bt, Handler mhandler) {
 		this.mhandler = mhandler;
 		mBluetoothAdapter = bt;
 		BluetoothSocket tmp = null;
@@ -43,7 +43,7 @@ public class ConnectToDevice extends Thread{
 		
 		mConnectedThread = new DeviceConnected(mmSocket, mhandler);
 		mConnectedThread.start();
-		sendData();
+		mhandler.obtainMessage(1, "OK").sendToTarget();
 	}
 		
 		//Stop Connection With Bluetooth Device
@@ -53,7 +53,11 @@ public class ConnectToDevice extends Thread{
 		} catch (IOException e) { }
 	}
 	
-	public void sendData(){
-		mConnectedThread.write((data+"\n").getBytes());
+	public void sendData(String asdf){
+		try{
+		mConnectedThread.write((asdf+"\n").getBytes());}
+		catch(Exception e){
+			Log.d("Errorerror","yep");
+		}
 	}
 }

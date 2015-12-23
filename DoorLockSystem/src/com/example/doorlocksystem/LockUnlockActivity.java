@@ -18,12 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class LockUnlockActivity extends Activity {
-	BluetoothAdapter adapt;
+	
 	EditText pw1, pw2, pw3, pw4, pw5;
 	TextView lockstatus;
 	Button submitCode;
-	Handler inputStreamHandler;
-	BluetoothAdapter mBluetoothAdapter;
+	BluetoothAdapter mBluetoothAdapter,adapt;
 	BluetoothDevice btModule;
 	ConnectToDevice mConnectThread;
 	int productKey;
@@ -142,11 +141,10 @@ public class LockUnlockActivity extends Activity {
 				//Parameters are btModule - device to be connected
 				//mBluetoothAdapter - BluetoothAdapter
 				mConnectThread = new ConnectToDevice(btModule, 
-						mBluetoothAdapter, SignalToArduino.SEND_PRODKEY + productKey, mHandler);
+						mBluetoothAdapter, mHandler);
 				GenerateKey.resetKey();
 				//Connect to Bluetooth Module
 				mConnectThread.start();
-				
 			}
 			else{
 				Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
@@ -220,6 +218,9 @@ public class LockUnlockActivity extends Activity {
 			  if (data.trim().equals("1")){
 				  Toast.makeText(LockUnlockActivity.this, "Door Unlocked", Toast.LENGTH_LONG).show();
 			  }
+			  else if(data.equals("OK")){
+				  mConnectThread.sendData(SignalToArduino.SEND_PRODKEY + productKey);
+	          }
 			  else{
 				  Toast.makeText(LockUnlockActivity.this, ErrorCode.E60, Toast.LENGTH_LONG).show();
 			  }

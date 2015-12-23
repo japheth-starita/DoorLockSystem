@@ -16,7 +16,6 @@ public class MainActivity extends Activity {
 	BluetoothAdapter adapt;
 	ToggleButton onoff;
 	public static final String PREFS_NAME = "PREFERENCES";
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

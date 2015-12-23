@@ -26,7 +26,7 @@ public class RequestCodeActivity extends Activity {
 	BluetoothAdapter mBluetoothAdapter;
 	BluetoothDevice btModule;
 	ConnectToDevice mConnectThread;
-    TextView pubKey, privKey;
+    TextView pubKey;
 	Button gotoLockUnlock;
 	ProgressBar progBar;
     
@@ -50,18 +50,13 @@ public class RequestCodeActivity extends Activity {
 		                }
 				}
 			}
-			
 			pubKey = (TextView) findViewById(R.id.pubKey);
-			privKey = (TextView) findViewById(R.id.privKey);
-
-			//Parameters are btModule - device to be connected
-			//mBluetoothAdapter - BluetoothAdapter
-			GenerateKey.genprivateNum();
+			
 			mConnectThread = new ConnectToDevice(btModule, 
-					mBluetoothAdapter, SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey(), mHandler);
+					mBluetoothAdapter, mHandler);
 			//Connect to Bluetooth Module
 			mConnectThread.start();
-			Toast.makeText(getApplicationContext(), "Connecting", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Requesting Connection", Toast.LENGTH_LONG).show();
 		}
 		else{
 			Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
@@ -83,15 +78,34 @@ public class RequestCodeActivity extends Activity {
 	
 	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
-		          String data = (String) msg.obj;
-		          pubKey.setText(data);
-		          progBar.setVisibility(View.GONE);
-		          try{
-		        	  gotoLockUnlock.setEnabled(true);
-		          }catch(Exception e){}
+		          String data = ((String) msg.obj).trim();
+		          if(data.equals("OK")){
+		        	  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD);
+		          }
+		          else if(data.length() == 4 ){
+		        	  pubKey.setText(data);
+			          progBar.setVisibility(View.GONE);
+			          try{
+			        	  gotoLockUnlock.setEnabled(true);
+			          }catch(Exception e){}  
+		          }
+		          else{
+		        	  checkMacAddress(data);
+		          }
 		    }
+		  
+		  public void checkMacAddress(String addresses){
+			  String deviceAddress = mBluetoothAdapter.getAddress();
+			  if(addresses.contains(deviceAddress)){
+				  GenerateKey.genprivateNum();
+	        	  mConnectThread.sendData(SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey() );
+	        	  Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+			  }
+			  else{
+				  Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
+			  }
+		  }
 	  };
-	  
 	  
 	  public void closeAll(){
 		  try{
@@ -99,6 +113,4 @@ public class RequestCodeActivity extends Activity {
 			}catch(Exception e){}		
 			finish();
 	  }
-
 }
-

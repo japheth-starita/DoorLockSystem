@@ -72,8 +72,7 @@ public class AddDeviceActivity extends Activity {
     		}
     		else{
     			stateBluetooth.setText("Bluetooth is NOT Enabled!");
-    			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-    			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+    			bluetoothAdapter.enable();
     		}
         }
     }
