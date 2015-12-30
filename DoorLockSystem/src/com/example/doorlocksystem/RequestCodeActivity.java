@@ -29,6 +29,7 @@ public class RequestCodeActivity extends Activity {
     TextView pubKey;
 	Button gotoLockUnlock;
 	ProgressBar progBar;
+	boolean stopReceivingData = false;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,38 +80,51 @@ public class RequestCodeActivity extends Activity {
 	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
 		          String data = ((String) msg.obj).trim();
+		          Log.d("Data Received", data);
 		          if(data.equals("OK")){
-		        	  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD);
+		        	  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD+"");
+		        	  Log.d("BT", "Sending data");
+		        	  //Next is checkMacAddress
 		          }
 		          else if(data.length() == 4 ){
-		        	  pubKey.setText(data);
+		        	  pubKey.setText(pubKey.getText().toString()+data);
 			          progBar.setVisibility(View.GONE);
 			          try{
 			        	  gotoLockUnlock.setEnabled(true);
 			          }catch(Exception e){}  
 		          }
-		          else{
+		          else if(data.length() >= 4){
 		        	  checkMacAddress(data);
 		          }
 		    }
-		  
-		  public void checkMacAddress(String addresses){
-			  String deviceAddress = mBluetoothAdapter.getAddress();
-			  if(addresses.contains(deviceAddress)){
-				  GenerateKey.genprivateNum();
-	        	  mConnectThread.sendData(SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey() );
-	        	  Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
-			  }
-			  else{
-				  Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
-			  }
-		  }
 	  };
+	  
+	  public void checkMacAddress(String addresses){
+		  String deviceAddress = mBluetoothAdapter.getAddress();
+		  Log.d("device", deviceAddress);
+		  Log.d("ard", addresses);
+		  if(stopReceivingData){
+			  Log.d("NOPE", "NOPE");
+		  }
+		  else if(addresses.contains(deviceAddress)){
+			  GenerateKey.genprivateNum();
+        	  mConnectThread.sendData(SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey()+"");
+        	  Log.d("BT", "Sending data"+SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey());
+        	  Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+        	  stopReceivingData = true;
+		  }
+		  else{
+			  Log.d("Really",addresses);
+			  Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
+			  closeAll();
+		  }
+	  }
 	  
 	  public void closeAll(){
 		  try{
-				mConnectThread.cancel();
-			}catch(Exception e){}		
+			  mBluetoothAdapter.disable();
+		  }catch(Exception e){
+		  }
 			finish();
 	  }
 }

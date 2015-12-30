@@ -215,22 +215,22 @@ public class LockUnlockActivity extends Activity {
 	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
 			  String data = (String) msg.obj;
+			  Log.d("Ard", data);
 			  if (data.trim().equals("1")){
 				  Toast.makeText(LockUnlockActivity.this, "Door Unlocked", Toast.LENGTH_LONG).show();
 			  }
 			  else if(data.equals("OK")){
-				  mConnectThread.sendData(SignalToArduino.SEND_PRODKEY + productKey);
+				  mConnectThread.sendData(SignalToArduino.SEND_PRODKEY + productKey+"");
 	          }
 			  else{
 				  Toast.makeText(LockUnlockActivity.this, ErrorCode.E60, Toast.LENGTH_LONG).show();
 			  }
-			  closeAll();
 		  }
 	  };
 	  
 	  public void closeAll(){
 		  try{
-				mConnectThread.cancel();
+			  mBluetoothAdapter.disable();
 			}catch(Exception e){}		
 			finish();
 	  }

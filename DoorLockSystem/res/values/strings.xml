@@ -10,5 +10,7 @@
     <string name="title_activity_request_code">RequestCodeActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_add_device">AddDeviceActivity</string>
+    <string name="title_activity_change_user_pass">ChangeUserPassActivity</string>
+    <string name="title_activity_delete_device">DeleteDeviceActivity</string>
 
 </resources>

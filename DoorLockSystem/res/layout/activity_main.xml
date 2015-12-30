@@ -8,12 +8,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.doorlocksystem.MainActivity" >
 	
+    <TextView
+        android:id="@+id/txtDevicename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:text="hello"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
     <ToggleButton
         android:id="@+id/btSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtDevicename"
         android:textOn="Disable Bluetooth"
         android:textOff="Enable Bluetooth"
         android:onClick="SwitchBT"/>

@@ -1,6 +1,7 @@
 package com.example.doorlocksystem;
 
 
+import java.util.Arrays;
 import java.util.Set;
 
 import android.app.Activity;
@@ -37,29 +38,32 @@ public class DeviceManagerActivity extends Activity {
         ArrayAdapter<String> optionArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         option.setAdapter(optionArrayAdapter);
         optionArrayAdapter.add("Add This Device");
-        optionArrayAdapter.add("Add Other Device");
-        optionArrayAdapter.add("Manage Device");
+        optionArrayAdapter.add("Delete Device");
         optionArrayAdapter.add("Change Verification Character");
+        optionArrayAdapter.add("Change Username and Password");
         option.setAdapter(optionArrayAdapter);
-        
         option.setOnItemClickListener(new OnItemClickListener() {
-			
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
+				Intent intent;
 				switch( position ){
 					case 0:
 						addOwnDevice = new AddOwnDevice();
 				    	addOwnDevice.showInputDialogBox( DeviceManagerActivity.this, mHandler);
-					case 1:  
-						Intent newActivity = new Intent(DeviceManagerActivity.this, AddDeviceActivity.class);     
-						startActivity(newActivity);
+				    	sendDeviceAddress();
+				    	break;
+					case 1:
+						intent = new Intent(DeviceManagerActivity.this, DeleteDeviceActivity.class);
+						startActivity(intent);
 						break;
 					case 2:
 						InputUserVerification userverify = new InputUserVerification();
 						userverify.showInputDialogBox(false, DeviceManagerActivity.this, mHandler);
+						break;
+					case 3:
+						intent = new Intent(DeviceManagerActivity.this, ChangeUserPassActivity.class);     
+						startActivity(intent);
 				}
 			}
         }); 
@@ -93,42 +97,53 @@ public class DeviceManagerActivity extends Activity {
 			}
 		}
 	
-	 public Handler mHandler = new Handler() {
+	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
-			  String data = (String) msg.obj;
 			  switch (msg.what) {
 		        case 1: 
+		          String [] data = ((String) msg.obj).split("\n");
 		          SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-			      editor.putString("verifychar", data);
+			      editor.putString("verifychar", data[0]);
+			      editor.putString("devicename", data[1]);
 			      editor.commit();
 			      Log.d("Received", "OK");
 		      }
 		    }
-	  };
-	  
+	  };	  
 	  public Handler mHandler2 = new Handler() {
 		  public void handleMessage(Message msg) {
 			  String data = (String) msg.obj;
+			  Log.d("Hello",(data.length()%17 < 1)+"");
 			  if(data.equals("OK")){
-				  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD);
+				  //Get list of mac addresses
+				  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD+"");
+				  Log.d("BT", "Sending data");
 			  }
-			  else{
-				  if(data.length()/17 >= 5){
+			  else {
+				  data = data.trim();
+				  if(data.length()/17 >= 3){
+					  Log.d("Error", "Adding Device");
 					  Toast.makeText(getApplicationContext(), ErrorCode.E40, Toast.LENGTH_LONG).show();
+					  addOwnDevice.removeDialog();
+					  closeAll();
 				  }
 				  else{
+					  Log.d("Success", "Adding Device");
 					  data+=mBluetoothAdapter.getAddress();
-					  mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_ADD + data);
-					  Toast.makeText(getApplicationContext(), "Successfully Added Device", Toast.LENGTH_LONG).show();
+					  Log.d("Addresses", data);
+					  mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_ADD+data);
+					  Log.d("BT", "Sending data");
 					  addOwnDevice.removeDialog();
+					  Toast.makeText(DeviceManagerActivity.this, "Successfully Added Device", Toast.LENGTH_SHORT).show();
+					  closeAll();
 				  }
 			  }
-		    }
+		}
 	  };
 	  
 	  public void closeAll(){
 		  try{
-				mConnectThread.cancel();
+			  mBluetoothAdapter.disable();
 			}catch(Exception e){}		
 	  }
 }

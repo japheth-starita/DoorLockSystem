@@ -45,6 +45,14 @@
             android:name=".AddDeviceActivity"
             android:label="@string/title_activity_add_device" >
         </activity>
+        <activity
+            android:name=".ChangeUserPassActivity"
+            android:label="@string/title_activity_change_user_pass" >
+        </activity>
+        <activity
+            android:name=".DeleteDeviceActivity"
+            android:label="@string/title_activity_delete_device" >
+        </activity>
     </application>
 
 </manifest>

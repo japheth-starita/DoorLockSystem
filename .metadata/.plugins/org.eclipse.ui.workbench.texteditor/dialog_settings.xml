@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="E30" key="selection"/>
+		<item value="onBack" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="e30"/>
+			<item value="onback"/>
+			<item value="name"/>
+			<item value="remove"/>
+			<item value="dismiss"/>
+			<item value="sending"/>
+			<item value="data rec"/>
+			<item value="e20"/>
 			<item value="send"/>
-			<item value="ime"/>
-			<item value="pw5"/>
-			<item value="ps5"/>
-			<item value="mbluetooth"/>
-			<item value="inputstream"/>
-			<item value="write"/>
 		</list>
 		<list key="replacehistory">
 		</list>

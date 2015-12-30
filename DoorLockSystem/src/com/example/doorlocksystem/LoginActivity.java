@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -21,11 +23,13 @@ import android.widget.Toast;
 public class LoginActivity extends Activity {
 	BluetoothAdapter mBluetoothAdapter;
 	BluetoothDevice btModule;
+	Button submit;
 	ConnectToDevice mConnectThread;
 	EditText admin_user;
 	EditText admin_pw;
 	boolean isConnected;
 	boolean isConnecting;
+	private Button cancel;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +38,22 @@ public class LoginActivity extends Activity {
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		admin_user = (EditText) findViewById(R.id.user);
     	admin_pw = (EditText) findViewById(R.id.pw);
-    	isConnected =false;
-    	isConnecting = false;
+    	submit = (Button) findViewById(R.id.submit);
+    	cancel = (Button) findViewById(R.id.cancel);
+	}
+	
+	public void cancelActivity(View v){
+		closeAll();
 	}
 
 	//Check Admin Password and Username
     public void submitAdmin(View view){
+    	submit.setEnabled(false);
+    	cancel.setEnabled(false);
     	checkAdmin();
     }
     
     public void checkAdmin(){
-    	if(!isConnected){
 			BluetoothService bs = new BluetoothService();
 			if(bs.isthereBluetooth(mBluetoothAdapter)){
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -63,17 +72,13 @@ public class LoginActivity extends Activity {
 						mBluetoothAdapter, mHandler);
 				//Connect to Bluetooth Module
 				mConnectThread.start();
-				isConnected = true;
 			}
 			else{
 				Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
+				closeAll();
 			}
     	}
-    	else{
-    		mConnectThread.sendData(SignalToArduino.SEND_USERNAME_PASSWORD+admin_user.getText().toString()+
-					  "#"+admin_pw.getText().toString());
-    	}
-	}
+	
 
 	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
@@ -85,12 +90,16 @@ public class LoginActivity extends Activity {
 			  else if(data.equals("OK")){
 				  mConnectThread.sendData(SignalToArduino.SEND_USERNAME_PASSWORD+admin_user.getText().toString()+
 						  "#"+admin_pw.getText().toString());
+				  Log.d("BT", "Sending data");
 	          }
 			  else{
 				  Toast.makeText(getApplicationContext(), ErrorCode.E30, Toast.LENGTH_LONG).show();
 				  admin_user.setText("");
 				  admin_user.requestFocus();
 				  admin_pw.setText("");
+				  submit.setEnabled(true);
+				  cancel.setEnabled(true);
+				  mBluetoothAdapter.disable();
 			  }
 			  
 		  }
@@ -108,7 +117,7 @@ public class LoginActivity extends Activity {
 
 	public void closeAll(){
 		  try{
-				mConnectThread.cancel();
+			  mBluetoothAdapter.disable();
 			}catch(Exception e){}		
 			finish();
 	}

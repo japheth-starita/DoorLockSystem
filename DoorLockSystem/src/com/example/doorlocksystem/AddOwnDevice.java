@@ -14,7 +14,7 @@ public class AddOwnDevice {
 	private String verifychar;
 	AlertDialog alertBuilder;
 	public void showInputDialogBox(Context context, final Handler mhandler){
-		View view = (LayoutInflater.from(context)).inflate(R.layout.user_input_box, null);
+		View view = (LayoutInflater.from(context)).inflate(R.layout.add_own_device, null);
 		final TextView textProg = (TextView) view.findViewById(R.id.tvProg);
 		alertBuilder = new AlertDialog.Builder(context)
 		.setView(view)
