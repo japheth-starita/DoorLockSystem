@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,14 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class RequestCodeActivity extends Activity {
-	Handler inputStreamHandler;
-	BluetoothAdapter mBluetoothAdapter;
-	BluetoothDevice btModule;
-	ConnectToDevice mConnectThread;
-    TextView pubKey;
-	Button gotoLockUnlock;
-	ProgressBar progBar;
-	boolean stopReceivingData = false;
+	private BluetoothAdapter mBluetoothAdapter;
+	private BluetoothDevice btModule;
+	private ConnectToDevice mConnectThread;
+    private TextView pubKey;
+	private Button gotoLockUnlock;
+	private ProgressBar progBar;
+	private boolean stopReceivingData = false;
+	private String deviceName;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,27 +41,30 @@ public class RequestCodeActivity extends Activity {
 		gotoLockUnlock.setEnabled(false);
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		BluetoothService bs = new BluetoothService();
-		if(bs.isthereBluetooth(mBluetoothAdapter)){
-			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-			if (pairedDevices.size() > 0) {
-				for (BluetoothDevice device : pairedDevices) {
-					 if(device.getName().equals("HC-05")) 
-		                {
-		                    btModule = device;
-		                    break;
-		                }
+		if(hasDeviceName()){
+			if(bs.isthereBluetooth(mBluetoothAdapter)){
+				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+				if (pairedDevices.size() > 0) {
+					for (BluetoothDevice device : pairedDevices) {
+						 if(device.getName().equals("HC-05")) 
+			                {
+			                    btModule = device;
+			                    break;
+			                }
+					}
 				}
+				pubKey = (TextView) findViewById(R.id.pubKey);
+				
+				mConnectThread = new ConnectToDevice(btModule, 
+						mBluetoothAdapter, mHandler);
+				//Connect to Bluetooth Module
+				mConnectThread.start();
+				Toast.makeText(getApplicationContext(), "Requesting Connection", Toast.LENGTH_LONG).show();
+			}else{
+				Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
 			}
-			pubKey = (TextView) findViewById(R.id.pubKey);
-			
-			mConnectThread = new ConnectToDevice(btModule, 
-					mBluetoothAdapter, mHandler);
-			//Connect to Bluetooth Module
-			mConnectThread.start();
-			Toast.makeText(getApplicationContext(), "Requesting Connection", Toast.LENGTH_LONG).show();
-		}
-		else{
-			Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
+		}else{
+			Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -82,7 +86,7 @@ public class RequestCodeActivity extends Activity {
 		          String data = ((String) msg.obj).trim();
 		          Log.d("Data Received", data);
 		          if(data.equals("OK")){
-		        	  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD+"");
+		        	  mConnectThread.sendData(SignalToArduino.SEND_NAME+deviceName.charAt(deviceName.length()-1));
 		        	  Log.d("BT", "Sending data");
 		        	  //Next is checkMacAddress
 		          }
@@ -112,10 +116,10 @@ public class RequestCodeActivity extends Activity {
         	  Log.d("BT", "Sending data"+SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey());
         	  Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
         	  stopReceivingData = true;
-		  }
-		  else{
+		  }else{
 			  Log.d("Really",addresses);
 			  Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
+			  resetDeviceName();
 			  closeAll();
 		  }
 	  }
@@ -123,8 +127,22 @@ public class RequestCodeActivity extends Activity {
 	  public void closeAll(){
 		  try{
 			  mBluetoothAdapter.disable();
-		  }catch(Exception e){
+		  }catch(Exception e){}
+		  finish();
+	  }
+	  
+	  public boolean hasDeviceName(){
+		  deviceName = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE).getString("devicename", "");
+		  if(deviceName.isEmpty()){
+			  return false;
 		  }
-			finish();
+		  return true;
+	  }
+	  
+	  public void resetDeviceName(){
+		  SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+	      editor.putString("devicename", "");
+	      editor.commit();
+	      Log.d("Device Name", "Reset");
 	  }
 }

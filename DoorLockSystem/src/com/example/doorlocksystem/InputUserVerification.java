@@ -12,11 +12,9 @@ import android.widget.EditText;
 
 public class InputUserVerification {
 	private String verifychar;
-	private String devicename;
 	public void showInputDialogBox(final boolean isFirstTime, Context context, final Handler mhandler){
 		View view = (LayoutInflater.from(context)).inflate(R.layout.user_input_box, null);
 		final EditText inputverifychar = (EditText) view.findViewById(R.id.inputverifychar);
-		final EditText inputdevicename = (EditText) view.findViewById(R.id.inputdevicename);
 		final AlertDialog alertBuilder = new AlertDialog.Builder(context)
 		.setView(view)
 		.setCancelable(!isFirstTime)
@@ -28,7 +26,6 @@ public class InputUserVerification {
 			
 			@Override
 			public void onShow(DialogInterface d) {
-				inputdevicename.setText(MainActivity.strdeviceName);
 				Button a = alertBuilder.getButton(alertBuilder.BUTTON_POSITIVE);
 				a.setOnClickListener(new View.OnClickListener() {
 					
@@ -36,9 +33,8 @@ public class InputUserVerification {
 					public void onClick(View v) {
 						if(!inputverifychar.getText().toString().isEmpty()){
 							verifychar =inputverifychar.getText().toString();
-							devicename = inputdevicename.getText().toString();
 							//Send to mainactivity or devicemanager
-							mhandler.obtainMessage(1,verifychar+"\n"+devicename).sendToTarget();
+							mhandler.obtainMessage(1,verifychar).sendToTarget();
 							alertBuilder.dismiss();
 						}
 						
@@ -48,7 +44,6 @@ public class InputUserVerification {
 				Button b = alertBuilder.getButton(alertBuilder.BUTTON_NEGATIVE);
 				if(isFirstTime){
 					b.setEnabled(false);
-					inputdevicename.setEnabled(true);
 				}
 				
 			}

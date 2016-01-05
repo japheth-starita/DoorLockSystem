@@ -27,7 +27,8 @@ public class DeviceManagerActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter;
 	private ConnectToDevice mConnectThread;
 	private BluetoothDevice btModule;
-	AddOwnDevice addOwnDevice;
+	private SharedPreferences.Editor editor;
+	private AddOwnDevice addOwnDevice;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,17 +72,17 @@ public class DeviceManagerActivity extends Activity {
 	}
 	
 	public void sendDeviceAddress(){
+		if(noDeviceName()){
 			mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 			BluetoothService bs = new BluetoothService();
 			if(bs.isthereBluetooth(mBluetoothAdapter)){
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 				if (pairedDevices.size() > 0) {
 					for (BluetoothDevice device : pairedDevices) {
-						 if(device.getName().equals("HC-05")) 
-			                {
-			                    btModule = device;
-			                    break;
-			                }
+						if(device.getName().equals("HC-05")) {
+							 btModule = device;
+							 break;
+						}
 					}
 				}
 	
@@ -95,55 +96,68 @@ public class DeviceManagerActivity extends Activity {
 			else{
 				Toast.makeText(getApplicationContext(), ErrorCode.E70, Toast.LENGTH_LONG).show();
 			}
+		}else{
+			Log.d("Error", "Adding Device");
+			Toast.makeText(getApplicationContext(), ErrorCode.E40, Toast.LENGTH_LONG).show();
+			addOwnDevice.removeDialog();
+			closeAll();
 		}
+	}
 	
+	//handler for alertdialog
 	public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
 			  switch (msg.what) {
 		        case 1: 
-		          String [] data = ((String) msg.obj).split("\n");
-		          SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-			      editor.putString("verifychar", data[0]);
-			      editor.putString("devicename", data[1]);
+		          editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+			      editor.putString("verifychar", (String) msg.obj);
 			      editor.commit();
-			      Log.d("Received", "OK");
+			      Log.d("Verification Char", "Received");
 		      }
 		    }
 	  };	  
+	  
+	  //Handler for bluetooth
 	  public Handler mHandler2 = new Handler() {
 		  public void handleMessage(Message msg) {
 			  String data = (String) msg.obj;
-			  Log.d("Hello",(data.length()%17 < 1)+"");
 			  if(data.equals("OK")){
 				  //Get list of mac addresses
-				  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD+"");
+				  //Send signal 4 and the mac address
+				  mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_ADD+mBluetoothAdapter.getAddress());
 				  Log.d("BT", "Sending data");
 			  }
-			  else {
-				  data = data.trim();
-				  if(data.length()/17 >= 3){
-					  Log.d("Error", "Adding Device");
-					  Toast.makeText(getApplicationContext(), ErrorCode.E40, Toast.LENGTH_LONG).show();
-					  addOwnDevice.removeDialog();
-					  closeAll();
-				  }
-				  else{
-					  Log.d("Success", "Adding Device");
-					  data+=mBluetoothAdapter.getAddress();
-					  Log.d("Addresses", data);
-					  mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_ADD+data);
-					  Log.d("BT", "Sending data");
-					  addOwnDevice.removeDialog();
-					  Toast.makeText(DeviceManagerActivity.this, "Successfully Added Device", Toast.LENGTH_SHORT).show();
-					  closeAll();
-				  }
+			  else if(data.trim().equals("Error")){
+				  Log.d("Error", "Adding Device");
+				  Toast.makeText(getApplicationContext(), ErrorCode.E40, Toast.LENGTH_LONG).show();
 			  }
-		}
+			  else if(data.trim().contains("user")){
+				  Log.d("Success", "Adding Device");
+				  setDeviceName(data.trim());
+				  addOwnDevice.removeDialog();
+				  closeAll();
+			  }
+		  }
 	  };
 	  
 	  public void closeAll(){
 		  try{
 			  mBluetoothAdapter.disable();
 			}catch(Exception e){}		
+	  }
+	  
+	  public boolean noDeviceName(){
+		  String devicename = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE).getString("devicename", "");
+		  if(devicename.isEmpty()){
+			  return true;
+		  }
+		  return false;
+	  }
+	  
+	  public void setDeviceName(String name){
+		  editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+	      editor.putString("devicename", name);
+	      editor.commit();
+	      Log.d("Device Name", "Received");
 	  }
 }

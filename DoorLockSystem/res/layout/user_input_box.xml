@@ -26,22 +26,5 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Enter a single character which you will input in the last textbox whenever you enter the 4-digit code. This is to verify that you are using the device." />
     
-    <EditText
-        android:id="@+id/inputdevicename"
-        android:layout_below="@+id/instruction"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:enabled="false"
-        android:maxLength="10">
-    </EditText>
-    
-    <TextView
-        android:id="@+id/instruction2"
-        android:layout_below="@+id/inputdevicename"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Enter a unique device name. *Permanent" />
+   
 </RelativeLayout>

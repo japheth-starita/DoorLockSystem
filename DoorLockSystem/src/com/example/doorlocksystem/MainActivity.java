@@ -40,12 +40,12 @@ public class MainActivity extends Activity {
 		}
 		devicename.setText(getSharedPreferences(PREFS_NAME,  MODE_PRIVATE).getString("devicename", ""));
 	      strdeviceName = devicename.getText().toString();
-		
     }
     
     @Override
     public void onResume() {
     	super.onResume();
+    	devicename.setText(getSharedPreferences(PREFS_NAME,  MODE_PRIVATE).getString("devicename", ""));
     	checkBluetooth();
     }
     
@@ -93,16 +93,10 @@ public class MainActivity extends Activity {
 		  public void handleMessage(Message msg) {
 			  switch (msg.what) {
 		        case 1: 
-		          String [] data = ((String) msg.obj).split("\n");
 		          SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
-			      editor.putString("verifychar", data[0]);
-			      editor.putString("devicename", data[1]);
+			      editor.putString("verifychar", (String) msg.obj);
 			      editor.commit();
-			      devicename.setText(getSharedPreferences(PREFS_NAME,  MODE_PRIVATE).getString("devicename", ""));
-			      strdeviceName = devicename.getText().toString();
-			      Log.d("YEhey", data[0]);
-			      Log.d("YEhey", data[1]);
-			      Log.d("Received", "OK");
+			      Log.d("Verification Char", "Received");
 		      }
 		    }
 	  };

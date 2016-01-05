@@ -24,7 +24,6 @@ public class DeleteDeviceActivity extends Activity {
 	private ConnectToDevice mConnectThread;
 	private BluetoothDevice btModule;
 	private ArrayAdapter<String> optionArrayAdapter;
-	private String strlistofmacaddress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class DeleteDeviceActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				try{
-					deleteDevice(listofdevices.getItemAtPosition(position).toString());
+					deleteDevice(position+1);
 				}catch(Exception e){}
 			}
         });
@@ -49,11 +48,9 @@ public class DeleteDeviceActivity extends Activity {
 
 	}
 	
-	public void deleteDevice(String device){
+	public void deleteDevice(int device){
 		Toast.makeText(getApplicationContext(), device, Toast.LENGTH_SHORT).show();
-		strlistofmacaddress = strlistofmacaddress.replaceFirst("device", "");
-		mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_ADD+strlistofmacaddress);
-		Toast.makeText(getApplicationContext(), strlistofmacaddress, Toast.LENGTH_LONG).show();
+		mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_DELETE+device);
 	}
 	
 	public void getDevices(){
@@ -85,30 +82,30 @@ public class DeleteDeviceActivity extends Activity {
 	
 	 public Handler mHandler = new Handler() {
 		  public void handleMessage(Message msg) {
-			  String data = strlistofmacaddress = (String) msg.obj;
+			  String data = ((String) msg.obj).trim();
 			  if(data.equals("OK")){
 				  //Get list of mac addresses
-				  mConnectThread.sendData(SignalToArduino.SEND_ANDROID_MAC_ADD+"");
+				  mConnectThread.sendData(SignalToArduino.REQUEST_LIST_OF_DEVICES+"");
 				  Log.d("BT", "Sending data");
 			  }
-			  else{
-				  data = data.trim();
-				  int len= 17;
-				  int k=(data.length()/len);
-				  int m=0;
-				   for(int i=0;i<(k+1);i++){
-					   if(i!=0) m=m+len;
-				    
-					   if(data.length()>=m+len){
-						   optionArrayAdapter.add((data.substring(m,m+len)));
-					   }
-					   else if(data.length()<m+len){
-						   optionArrayAdapter.add((data.substring(m,data.length())));
-					   }
-				   }
-				   optionArrayAdapter.notifyDataSetChanged();
+			  else if(isInteger(data)){
+				  optionArrayAdapter.add("user"+data);
+				  optionArrayAdapter.notifyDataSetChanged();
 			  }
-		}
+			  else if(data.equals("Success")){
+				  Toast.makeText(getApplicationContext(), "Successfully Deleted Device", Toast.LENGTH_LONG).show();
+			  }
+		  }
+		  
+		  public boolean isInteger( String input ) {
+			    try {
+			        Integer.parseInt( input );
+			        return true;
+			    }
+			    catch( Exception e ) {
+			        return false;
+			    }
+			}
 	  };
 	  
 	  public void closeAll(){

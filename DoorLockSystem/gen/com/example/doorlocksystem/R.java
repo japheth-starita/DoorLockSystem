@@ -1949,7 +1949,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0a003d;
         public static final int action_mode_bar_stub=0x7f0a003c;
         public static final int action_mode_close_button=0x7f0a0025;
-        public static final int action_settings=0x7f0a007f;
+        public static final int action_settings=0x7f0a007d;
         public static final int activity_chooser_view_content=0x7f0a0026;
         public static final int alertTitle=0x7f0a0030;
         public static final int always=0x7f0a0019;
@@ -1986,10 +1986,8 @@ containing a value of this type.
         public static final int ifRoom=0x7f0a001b;
         public static final int image=0x7f0a0028;
         public static final int info=0x7f0a0079;
-        public static final int inputdevicename=0x7f0a007d;
         public static final int inputverifychar=0x7f0a007b;
         public static final int instruction=0x7f0a007c;
-        public static final int instruction2=0x7f0a007e;
         public static final int line1=0x7f0a0073;
         public static final int line3=0x7f0a0077;
         public static final int listMode=0x7f0a000a;
