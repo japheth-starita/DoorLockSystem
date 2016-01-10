@@ -121,6 +121,7 @@ public class DeleteDeviceActivity extends Activity {
 			    }
 			}
 	  };
+	private SharedPreferences.Editor editor;
 	  
 	  public void closeAll(){
 		  try{

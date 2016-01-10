@@ -62,7 +62,7 @@ public class DeleteDeviceActivity extends Activity {
 		mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_DELETE+device);
 		
 		if (isDeviceName(device)){
-			resetDeviceName();
+			setDeviceName("");
 		}
 		Log.d("Requesting", "Deletion");
 	}
@@ -121,6 +121,7 @@ public class DeleteDeviceActivity extends Activity {
 			    }
 			}
 	  };
+	private SharedPreferences.Editor editor;
 	  
 	  public void closeAll(){
 		  try{
@@ -142,9 +143,9 @@ public class DeleteDeviceActivity extends Activity {
 		  return false;
 	  }
 	  
-	  public void resetDeviceName(){
+	  public void setDeviceName(String name){
 		  editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-	      editor.putString("devicename", "");
+	      editor.putString("devicename", name);
 	      editor.commit();
 	      Log.d("Device Name", "Received");
 	  }

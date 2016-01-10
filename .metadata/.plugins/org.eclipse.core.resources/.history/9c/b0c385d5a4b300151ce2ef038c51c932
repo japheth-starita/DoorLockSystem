@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,7 +24,6 @@ public class DeleteDeviceActivity extends Activity {
 	private ConnectToDevice mConnectThread;
 	private BluetoothDevice btModule;
 	private ArrayAdapter<String> optionArrayAdapter;
-	private SharedPreferences.Editor editor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +43,7 @@ public class DeleteDeviceActivity extends Activity {
 					int selectedDevice = Character.getNumericValue(
 							(selectedFromList.charAt(selectedFromList.length()-1)));
 					deleteDevice(selectedDevice);
-				}catch(Exception e){
-					Log.d("Error", "Deletion");
-				}
+				}catch(Exception e){}
 			}
         });
         
@@ -57,13 +52,8 @@ public class DeleteDeviceActivity extends Activity {
 	}
 	
 	public void deleteDevice(int device){
-		//delete device
-		Toast.makeText(DeleteDeviceActivity.this, device+"", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), device, Toast.LENGTH_SHORT).show();
 		mConnectThread.sendData(SignalToArduino.SEND_DEVICE_TO_DELETE+device);
-		
-		if (isDeviceName(device)){
-			resetDeviceName();
-		}
 		Log.d("Requesting", "Deletion");
 	}
 	
@@ -133,20 +123,5 @@ public class DeleteDeviceActivity extends Activity {
 	    public void onBackPressed(){
 			closeAll();
 		}
-	  
-	  public boolean isDeviceName(int mDevice){
-		  String devicename = getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE).getString("devicename", "");
-		  if(devicename.equals("user"+mDevice)){
-			  return true;
-		  }
-		  return false;
-	  }
-	  
-	  public void resetDeviceName(){
-		  editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-	      editor.putString("devicename", "");
-	      editor.commit();
-	      Log.d("Device Name", "Received");
-	  }
 
 }

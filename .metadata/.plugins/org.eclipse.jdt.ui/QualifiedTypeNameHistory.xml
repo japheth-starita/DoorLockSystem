@@ -53,11 +53,11 @@
 <fullyQualifiedTypeName name="com.example.doorlocksystem.ConnectToDevice"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.DeviceManagerActivity"/>
-<fullyQualifiedTypeName name="com.example.doorlocksystem.DeleteDeviceActivity"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.SignalToArduino"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.MainActivity"/>
-<fullyQualifiedTypeName name="android.content.SharedPreferences"/>
 <fullyQualifiedTypeName name="android.content.SharedPreferences.Editor"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="com.example.doorlocksystem.DeleteDeviceActivity"/>
+<fullyQualifiedTypeName name="android.content.SharedPreferences"/>
 </qualifiedTypeNameHistroy>
