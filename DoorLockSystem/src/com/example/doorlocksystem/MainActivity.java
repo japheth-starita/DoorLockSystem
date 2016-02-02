@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -13,17 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 public class MainActivity extends Activity {
-	private SystemMethods sm;
 	private BluetoothAdapter adapt;
 	private ToggleButton onoff;
 	private TextView devicename;
 	public static final String PREFS_NAME = "PREFERENCES";
 	public static String strdeviceName;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sm = new SystemMethods();
         adapt = BluetoothAdapter.getDefaultAdapter();
         onoff = (ToggleButton) findViewById(R.id.btSwitch);
         devicename = (TextView) findViewById(R.id.txtDevicename);
@@ -89,18 +89,17 @@ public class MainActivity extends Activity {
     	}
     }
     
-    public Handler mHandler = new Handler() {
-		  public void handleMessage(Message msg) {
-			  switch (msg.what) {
-		        case 1: 
+	public Handler mHandler = new Handler() {
+    	public void handleMessage(Message msg) {
+    		switch (msg.what) {
+    		case 1: 
 		          SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, 0).edit();
 			      editor.putString("verifychar", (String) msg.obj);
 			      editor.commit();
 			      Log.d("Verification Char", "Received");
 		      }
-		    }
-	  };
-    
-    
-    
+    		}
+	};
+	
 }
+

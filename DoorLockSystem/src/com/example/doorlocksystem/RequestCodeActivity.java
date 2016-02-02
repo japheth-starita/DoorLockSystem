@@ -29,7 +29,6 @@ public class RequestCodeActivity extends Activity {
     private TextView pubKey;
 	private Button gotoLockUnlock;
 	private ProgressBar progBar;
-	private boolean stopReceivingData = false;
 	private String deviceName;
     
 	@Override
@@ -39,6 +38,7 @@ public class RequestCodeActivity extends Activity {
 		progBar = (ProgressBar) findViewById(R.id.progBar);
 		gotoLockUnlock = (Button) findViewById(R.id.gotoLockUnlock);
 		gotoLockUnlock.setEnabled(false);
+
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		BluetoothService bs = new BluetoothService();
 		if(hasDeviceName()){
@@ -66,6 +66,7 @@ public class RequestCodeActivity extends Activity {
 		}else{
 			Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
 		}
+		
 	}
 	
 	public void gotoLockUnlockActivity(View view){
@@ -78,7 +79,8 @@ public class RequestCodeActivity extends Activity {
 	//presses back button
 	@Override
     public void onBackPressed(){
-		closeAll();
+		finish();
+		//closeAll();
 	}
 	
 	public Handler mHandler = new Handler() {
@@ -87,7 +89,6 @@ public class RequestCodeActivity extends Activity {
 		          Log.d("Data Received", data);
 		          if(data.equals("OK")){
 		        	  mConnectThread.sendData(SignalToArduino.SEND_NAME+deviceName.charAt(deviceName.length()-1));
-		        	  Log.d("BT", "Sending data");
 		        	  //Next is checkMacAddress
 		          }
 		          else if(data.length() == 4 ){
@@ -97,27 +98,26 @@ public class RequestCodeActivity extends Activity {
 			        	  gotoLockUnlock.setEnabled(true);
 			          }catch(Exception e){}  
 		          }
-		          else if(data.length() >= 4){
+		          else if(data.contains(":")){
+		        	  Log.d("HI", "MAC ADD");
 		        	  checkMacAddress(data);
+		          }
+		          else if(data.contains("Error")){
+		        	  Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
+					  resetDeviceName();
+					  closeAll();
 		          }
 		    }
 	  };
 	  
 	  public void checkMacAddress(String addresses){
 		  String deviceAddress = mBluetoothAdapter.getAddress();
-		  Log.d("device", deviceAddress);
-		  Log.d("ard", addresses);
-		  if(stopReceivingData){
-			  Log.d("NOPE", "NOPE");
-		  }
-		  else if(addresses.contains(deviceAddress)){
+		  if(addresses.contains(deviceAddress)){
 			  GenerateKey.genprivateNum();
         	  mConnectThread.sendData(SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey()+"");
         	  Log.d("BT", "Sending data"+SignalToArduino.SEND_PRIVKEY + GenerateKey.getPrivateKey());
         	  Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
-        	  stopReceivingData = true;
 		  }else{
-			  Log.d("Really",addresses);
 			  Toast.makeText(getApplicationContext(), ErrorCode.E20, Toast.LENGTH_LONG).show();
 			  resetDeviceName();
 			  closeAll();
