@@ -122,7 +122,7 @@ public class DeleteDeviceActivity extends Activity {
 	  
 	  public void closeAll(){
 		  try{
-			  mBluetoothAdapter.disable();
+			  mConnectThread.cancel();
 			}catch(Exception e){}
 		  finish();
 	  }

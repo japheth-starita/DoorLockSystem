@@ -79,8 +79,7 @@ public class RequestCodeActivity extends Activity {
 	//presses back button
 	@Override
     public void onBackPressed(){
-		finish();
-		//closeAll();
+		closeAll();
 	}
 	
 	public Handler mHandler = new Handler() {
@@ -125,9 +124,7 @@ public class RequestCodeActivity extends Activity {
 	  }
 	  
 	  public void closeAll(){
-		  try{
-			  mBluetoothAdapter.disable();
-		  }catch(Exception e){}
+		  mConnectThread.cancel();
 		  finish();
 	  }
 	  

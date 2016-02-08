@@ -6,12 +6,14 @@ import java.io.OutputStream;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.provider.Telephony.MmsSms;
+import android.util.Log;
 
 public class DeviceConnected extends Thread {
 	private Handler mHandler;
-	private final BluetoothSocket mmSocket;
-	private final InputStream mmInStream;
-	private final OutputStream mmOutStream;
+	private BluetoothSocket mmSocket;
+	private InputStream mmInStream;
+	private  OutputStream mmOutStream;
 	public DeviceConnected(BluetoothSocket socket, Handler mhandler) {
 		this.mHandler = mhandler;
 		mmSocket = socket;
@@ -25,9 +27,10 @@ public class DeviceConnected extends Thread {
 		mmInStream = tmpIn;
 		mmOutStream = tmpOut;
 	}
+	
 		
 	public void run() {
-        final byte delimiter = 10; //This is the ASCII code for a newline character
+        byte delimiter = 10; //This is the ASCII code for a newline character
         
         boolean stopWorker = false;
         int readBufferPosition = 0;
@@ -43,7 +46,7 @@ public class DeviceConnected extends Thread {
         				if(b == delimiter){
         					byte[] encodedBytes = new byte[readBufferPosition];
         					System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
-        					final String data = new String(encodedBytes, "US-ASCII");
+        					String data = new String(encodedBytes, "US-ASCII");
         					mHandler.obtainMessage(1,data).sendToTarget();
         					readBufferPosition = 0;        
         				}
@@ -65,7 +68,11 @@ public class DeviceConnected extends Thread {
 	public void cancel() {
 		try {
 			mmSocket.close();
-		} catch (IOException e) { }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
 

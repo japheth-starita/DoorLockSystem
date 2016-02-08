@@ -230,9 +230,9 @@ public class LockUnlockActivity extends Activity {
 	  
 	  public void closeAll(){
 		  try{
-			  mBluetoothAdapter.disable();
-			}catch(Exception e){}		
-			finish();
+			  mConnectThread.cancel();
+			}catch(Exception e){}
+		  finish();
 	  }
 }
 

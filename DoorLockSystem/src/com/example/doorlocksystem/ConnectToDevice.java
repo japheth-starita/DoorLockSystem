@@ -12,9 +12,9 @@ public class ConnectToDevice extends Thread{
 	private BluetoothAdapter mBluetoothAdapter;
 	private DeviceConnected mConnectedThread;
 	private Handler mhandler;
-	private final BluetoothSocket mmSocket;
-	private final BluetoothDevice mmDevice;
-	private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+	private BluetoothSocket mmSocket;
+	private BluetoothDevice mmDevice;
+	private UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 		
 	public ConnectToDevice(BluetoothDevice device, BluetoothAdapter bt, Handler mhandler) {
 		this.mhandler = mhandler;
@@ -46,10 +46,8 @@ public class ConnectToDevice extends Thread{
 	}
 		
 		//Stop Connection With Bluetooth Device
-	public void cancel() {
-		try {
-			mmSocket.close();
-		} catch (IOException e) { }
+	public void cancel(){
+		mBluetoothAdapter.disable();
 	}
 	
 	public void sendData(String asdf){

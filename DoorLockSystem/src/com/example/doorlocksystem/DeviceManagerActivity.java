@@ -156,8 +156,9 @@ public class DeviceManagerActivity extends Activity {
 	  
 	  public void closeAll(){
 		  try{
-			  mBluetoothAdapter.disable();
-			}catch(Exception e){}		
+			  mConnectThread.cancel();
+			}catch(Exception e){}
+		  finish();
 	  }
 	  
 	  public boolean noDeviceName(){

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.R"/>
 <fullyQualifiedTypeName name="android.app.ProgressDialog"/>
 <fullyQualifiedTypeName name="android.os.AsyncTask"/>
@@ -42,7 +41,6 @@
 <fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.R.layout"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="com.example.doorlocksystem.BluetoothService"/>
 <fullyQualifiedTypeName name="android.os.CountDownTimer"/>
 <fullyQualifiedTypeName name="com.example.doorlocksystem.SignalToArduino"/>
+<fullyQualifiedTypeName name="android.provider.Telephony.MmsSms"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
 </qualifiedTypeNameHistroy>
