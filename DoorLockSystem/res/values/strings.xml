@@ -12,5 +12,6 @@
     <string name="title_activity_add_device">AddDeviceActivity</string>
     <string name="title_activity_change_user_pass">ChangeUserPassActivity</string>
     <string name="title_activity_delete_device">DeleteDeviceActivity</string>
+    <string name="title_activity_set_door_lock_bt">SetDoorLockBTActivity</string>
 
 </resources>

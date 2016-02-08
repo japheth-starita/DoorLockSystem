@@ -21,22 +21,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Public Key: "/>
-    
-    <TextView
-        android:id="@+id/privKey"
-        android:layout_below="@+id/pubKey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Private Key: "/>
+        android:text="Code:"/>
 
     <Button
         android:id="@+id/gotoLockUnlock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/privKey"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/pubKey"
+        android:layout_centerHorizontal="true"
         android:text="Enter Code"
         android:onClick="gotoLockUnlockActivity"/>
     

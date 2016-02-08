@@ -9,4 +9,5 @@ public class SignalToArduino {
 	public static final String REQUEST_LIST_OF_DEVICES = "6";
 	public static final String SEND_NEW_USERNAME_PASSWORD = "7";
 	public static final String SEND_NAME = "8";
+	public static final String NAME = "DOORLOCKBT";
 }

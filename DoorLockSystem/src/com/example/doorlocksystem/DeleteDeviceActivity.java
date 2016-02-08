@@ -5,9 +5,7 @@ import java.util.Set;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,7 +72,7 @@ public class DeleteDeviceActivity extends Activity {
 			Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 			if (pairedDevices.size() > 0) {
 				for (BluetoothDevice device : pairedDevices) {
-					 if(device.getName().equals("HC-05")) 
+					 if(device.getName().equals(SignalToArduino.NAME)) 
 		                {
 		                    btModule = device;
 		                    break;

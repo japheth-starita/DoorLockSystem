@@ -1,0 +1,37 @@
+package com.example.doorlocksystem;
+
+import java.util.Set;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+
+public class BluetoothService {
+
+	public boolean isthereBluetooth(BluetoothAdapter adapt){
+		if(adapt == null){
+			return false;
+		}
+		else{
+			while(!adapt.isEnabled()){
+				adapt.enable();
+			}
+			return true;
+		}
+	}
+	
+	private static String doorLockBTName;
+	
+	public static String getDoorLockBT(){
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+		if (pairedDevices.size() > 0) {
+			for (BluetoothDevice device : pairedDevices) {
+				if (doorLockBTName == device.getName()){
+					return doorLockBTName;
+				}
+			}
+		}
+		return "";
+		
+	}
+}

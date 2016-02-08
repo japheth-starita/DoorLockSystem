@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -53,6 +54,19 @@ public class DeviceManagerActivity extends Activity {
 						addOwnDevice = new AddOwnDevice();
 				    	addOwnDevice.showInputDialogBox( DeviceManagerActivity.this, mHandler);
 				    	sendDeviceAddress();
+				    	new CountDownTimer(80000, 1000) {
+
+				    	     public void onTick(long millisUntilFinished) {
+				    	         
+				    	     }
+
+				    	     public void onFinish() {
+				    	    	 Log.d("Error", "Adding Device");
+				    				Toast.makeText(getApplicationContext(), ErrorCode.E40, Toast.LENGTH_LONG).show();
+				    				addOwnDevice.removeDialog();
+				    				closeAll();
+				    	     }
+				    	  }.start();
 				    	break;
 					case 1:
 						intent = new Intent(DeviceManagerActivity.this, DeleteDeviceActivity.class);
@@ -79,7 +93,7 @@ public class DeviceManagerActivity extends Activity {
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 				if (pairedDevices.size() > 0) {
 					for (BluetoothDevice device : pairedDevices) {
-						if(device.getName().equals("HC-05")) {
+						if(device.getName().equals(SignalToArduino.NAME)) {
 							 btModule = device;
 							 break;
 						}

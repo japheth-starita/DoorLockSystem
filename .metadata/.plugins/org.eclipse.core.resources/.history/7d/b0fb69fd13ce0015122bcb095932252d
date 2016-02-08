@@ -1,0 +1,26 @@
+package com.example.doorlocksystem;
+
+import android.bluetooth.BluetoothAdapter;
+import android.content.SharedPreferences;
+
+public class BluetoothService {
+	private SharedPreferences.Editor editor;
+
+	public boolean isthereBluetooth(BluetoothAdapter adapt){
+		if(adapt == null){
+			return false;
+		}
+		else{
+			while(!adapt.isEnabled()){
+				adapt.enable();
+			}
+			return true;
+		}
+	}
+	
+	public static String getDoorLockBT(){
+		editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+		editor.putString("verifychar", (String) msg.obj);
+		editor.commit();
+	}
+}

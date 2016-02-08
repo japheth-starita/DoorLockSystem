@@ -59,11 +59,6 @@ public class MainActivity extends Activity {
     	Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
-    
-	public void openLockUnlock(View view) {
-		//Intent intent = new Intent(this, LockUnlockActivity.class);
-		//startActivity(intent);
-	}
 	
 	public void openRequestCode(View view) {
 		Intent intent = new Intent(this, RequestCodeActivity.class);

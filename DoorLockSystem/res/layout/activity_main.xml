@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:text="hello"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <ToggleButton
@@ -36,32 +35,25 @@
         android:src="@drawable/logo" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btDeviceManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:text="Device Manager"
         android:onClick="openDeviceManager" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:text="Lock/Unlock"
-        android:onClick="openLockUnlock" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btRequestCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/btDeviceManager"
         android:layout_centerHorizontal="true"
         android:text="Request Code"
         android:onClick="openRequestCode"/>
-
+    
+   
     
 
 </RelativeLayout>

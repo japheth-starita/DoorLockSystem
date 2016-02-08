@@ -46,7 +46,7 @@ public class RequestCodeActivity extends Activity {
 				Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
 				if (pairedDevices.size() > 0) {
 					for (BluetoothDevice device : pairedDevices) {
-						 if(device.getName().equals("HC-05")) 
+						 if(device.getName().equals(SignalToArduino.NAME)) 
 			                {
 			                    btModule = device;
 			                    break;

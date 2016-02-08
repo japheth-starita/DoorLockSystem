@@ -53,6 +53,10 @@
             android:name=".DeleteDeviceActivity"
             android:label="@string/title_activity_delete_device" >
         </activity>
+        <activity
+            android:name=".SetDoorLockBTActivity"
+            android:label="@string/title_activity_set_door_lock_bt" >
+        </activity>
     </application>
 
 </manifest>
